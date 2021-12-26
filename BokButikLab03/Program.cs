@@ -18,7 +18,7 @@ using BokButikLab03;
     Console.WriteLine("Welcome! Press the corresponding buttons:" +
     " Show all press 1. | Add books press 2.| \n" +
     " Remove books press 3. | Add new book title press 4. |  Add new author press 5  \n" +
-    "Delete a book, press 6 | Delete an author press 7");
+    "Delete a book, press 6 | Delete an author press 7 | Edit the author press 8 | Edit the book press 9");
 
     int StoreID =0, BookAmount =0;
     long ISBN =0;
@@ -67,6 +67,14 @@ using BokButikLab03;
 
             case "7":
                 MenuCommands.RemoveTheAuthor();
+                break;
+
+            case "8":
+                MenuCommands.EditTheAuthor();
+                break;
+
+            case "9":
+                MenuCommands.EditTheBook();
                 break;
 
             default:

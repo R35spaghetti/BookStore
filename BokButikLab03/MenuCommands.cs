@@ -180,7 +180,139 @@ namespace BokButikLab03
 
             };
         }
+        public static void EditTheAuthor()
+        {
+            ShowAllAuthors();
+            Console.WriteLine("Skriv ID på vem som du vill ändra");
+            int answer = 0;
+            string strAnswer = "";
+            answer = IntInput(answer);
 
+            using (var context = new Laboration2RBContext())
+            {
+
+                var foundName = context.Författares
+                                .Single(f => f.Id == answer);
+
+
+                if (foundName != null)
+                {
+                    do
+                    {
+                        Console.WriteLine("Vad vill du ändra?");
+                        Console.WriteLine("> ");
+                        strAnswer = UserInputs(strAnswer);
+
+                        if (strAnswer.ToLower() == "förnamn")
+                        {
+                            Console.WriteLine("Ange nytt förnamn");
+                            strAnswer = UserInputs(strAnswer);
+                            foundName.Förnamn = strAnswer;
+                            Console.WriteLine($"{foundName.Förnamn} sparad");
+                        }
+
+                        else if (strAnswer.ToLower() == "efternamn")
+                        {
+                            Console.WriteLine("Ange nytt efternamn");
+                            strAnswer = UserInputs(strAnswer);
+                            foundName.Efternamn = strAnswer;
+                            Console.WriteLine($"{foundName.Efternamn} sparad");
+
+                        }
+                        else if (strAnswer.ToLower() == "födelsedatum")
+                        {
+                            Console.WriteLine("Ange nytt datum");
+                            DateTime AddDate = DateTime.Now;
+                            AddDate = DateInput(AddDate);
+                            foundName.Födelsedatum = AddDate;
+                            Console.WriteLine($"{foundName.Födelsedatum} sparad");
+
+                        }
+                        context.SaveChanges();
+                    } while (strAnswer != "inget");
+
+                }
+
+            }
+
+        }
+        public static void EditTheBook()
+        {
+            ShowAllISBNs();
+            Console.WriteLine("Skriv ISBN på vilken bok som du vill ändra");
+            long answer = 0;
+            string strAnswer = "";
+            decimal newPrice = 0;
+            answer = InputISBN(answer);
+
+            using (var context = new Laboration2RBContext())
+            {
+
+                var foundName = context.Böckers
+                                .First(f => f.Isbn13 == answer);
+
+
+                if (foundName != null)
+                {
+                    do
+                    {
+                        Console.WriteLine("Vad vill du ändra?");
+                        Console.WriteLine("> ");
+                        strAnswer = UserInputs(strAnswer);
+
+                        if (strAnswer.ToLower() == "titel")
+                        {
+                            Console.WriteLine("Ange ny titel");
+                            strAnswer = UserInputs(strAnswer);
+                            foundName.Titel = strAnswer;
+                            Console.WriteLine($"{foundName.Titel} sparad");
+                        }
+                        else if (strAnswer.ToLower() == "isbn")
+                        {
+                            do
+                            {
+                                Console.WriteLine("Ange nytt isbn13 (minst 13 tecken): ");
+                                answer = InputISBN(answer);
+                            } while(answer == 13);
+                            foundName.Isbn13 = answer;
+                            Console.WriteLine($"{foundName.Isbn13} sparad");
+                        }
+
+                        else if (strAnswer.ToLower() == "språk")
+                        {
+                            Console.WriteLine("Ange nytt språk");
+                            strAnswer = UserInputs(strAnswer);
+                            foundName.Språk = strAnswer;
+                            Console.WriteLine($"{foundName.Språk} sparad");
+
+                        }
+                        else if (strAnswer.ToLower() == "pris")
+                        {
+                            Console.WriteLine("Ange nytt pris");
+                            newPrice = PriceInput(newPrice);
+                            foundName.Pris = answer;
+                            Console.WriteLine($"{foundName.Pris} sparad");
+
+                        }
+                        else if (strAnswer.ToLower() == "utgivningsdatum")
+                        {
+                            Console.WriteLine("Ange nytt datum");
+                            DateTime AddDate = DateTime.Now;
+                            AddDate = DateInput(AddDate);
+                            foundName.Utgivningsdatum = AddDate;
+                            Console.WriteLine($"{foundName.Utgivningsdatum} sparad");
+
+                        }
+                        context.SaveChanges();
+                    } while (strAnswer != "inget");
+
+                }
+
+            }
+
+        }
+
+   
         private static void ShowAllAuthors()
         {
             using (var dbContext = new Laboration2RBContext())
