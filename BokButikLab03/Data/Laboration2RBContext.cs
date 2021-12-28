@@ -20,17 +20,17 @@ namespace BokButikLab03.Data
         public virtual DbSet<Butiker> Butikers { get; set; } = null!;
         public virtual DbSet<Böcker> Böckers { get; set; } = null!;
         public virtual DbSet<Författare> Författares { get; set; } = null!;
+        public virtual DbSet<Förlag> Förlags { get; set; } = null!;
         public virtual DbSet<LagerSaldo> LagerSaldos { get; set; } = null!;
 
-
-       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = Laboration2RB; Integrated Security = True;");
-            } 
+                 optionsBuilder.UseSqlServer(default);
+            
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -61,6 +61,15 @@ namespace BokButikLab03.Data
 
                             j.IndexerProperty<long>("BöckerIsbn").HasColumnName("BöckerISBN");
                         });
+            });
+
+            modelBuilder.Entity<Förlag>(entity =>
+            {
+                entity.HasOne(d => d.BokIsbn13Navigation)
+                    .WithMany(p => p.Förlags)
+                    .HasForeignKey(d => d.BokIsbn13)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK__Förlag__BokISBN1__38996AB5");
             });
 
             modelBuilder.Entity<LagerSaldo>(entity =>

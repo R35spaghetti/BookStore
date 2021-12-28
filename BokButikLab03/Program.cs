@@ -8,11 +8,6 @@ using Microsoft.Extensions.Configuration;
 using BokButikLab03;
 
 
-/// <summary>
-/// TODO: Redigera böcker
-/// TODO: Redigera författare
-/// TODO: Ta bort titlar (tabellen förlag behövs då den använder ISBN från böcker)
-/// </summary>
 
 {
     Console.WriteLine("Welcome! Press the corresponding buttons:" +
@@ -22,7 +17,6 @@ using BokButikLab03;
 
     int StoreID =0, BookAmount =0;
     long ISBN =0;
-
 
     do
     {
@@ -86,7 +80,7 @@ using BokButikLab03;
 
     } while (true);
 
-
+    
     void Question()
     {
         Console.Write("> ");
@@ -98,12 +92,13 @@ using BokButikLab03;
 int UserIntInput(int answerID)
 {
     Console.WriteLine("Enter ID: ");
-    var answer = Console.ReadLine();
-    answerID = int.Parse(answer);
+    string? answer = Console.ReadLine();
     if (answer == null)
     {
         throw new Exception("Enter a value");
     }
+    answerID = int.Parse(answer);
+
 
     return answerID;
 }
@@ -112,11 +107,12 @@ int AmountOfBooks(int bookAmount)
 {
     Console.WriteLine("Enter amount of books: ");
     var answer = Console.ReadLine();
-    bookAmount = int.Parse(answer);
     if (answer == null)
     {
         throw new Exception("Enter a value");
     }
+    bookAmount = int.Parse(answer);
+  
 
     return bookAmount;
 }
@@ -124,12 +120,13 @@ int AmountOfBooks(int bookAmount)
 int WhichStore(int storeID)
 {
     Console.WriteLine("Enter store ID: ");
-    var answer = Console.ReadLine();
-    storeID = int.Parse(answer);
+   var answer = Console.ReadLine();
     if (answer == null)
     {
-        throw new Exception("Enter a value");
+        throw new ArgumentException("Enter a value");
     }
+    storeID = int.Parse(answer);
+ 
 
     return storeID;
 }
@@ -138,16 +135,17 @@ long WhichISBN(long ISBN)
 {
     Console.WriteLine("Enter ISBN: ");
     var answer = Console.ReadLine();
-    ISBN = long.Parse(answer);
     if (answer == null)
     {
         throw new Exception("Enter a value");
     }
+    ISBN = long.Parse(answer);
+    
     return ISBN;
 }
 /*
 
- Scaffold-DbContext "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration2RB;Integrated Security=True;" Microsoft.EntityFrameWorkCore.SqlServer -Table LagerSaldo, Böcker, Författare, FörfattareBöcker, Butiker -ContextDir Data -OutputDir Models -DataAnnotations
+ Scaffold-DbContext "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration2RB;Integrated Security=True;" Microsoft.EntityFrameWorkCore.SqlServer -Table LagerSaldo, Böcker, Författare, FörfattareBöcker, Butiker, Förlag -ContextDir Data -OutputDir Models -DataAnnotations
 
 */
 

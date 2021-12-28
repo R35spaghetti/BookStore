@@ -11,6 +11,7 @@ namespace BokButikLab03.Models
     {
         public Böcker()
         {
+            Förlags = new HashSet<Förlag>();
             LagerSaldos = new HashSet<LagerSaldo>();
             Författares = new HashSet<Författare>();
         }
@@ -27,6 +28,8 @@ namespace BokButikLab03.Models
         [Column(TypeName = "date")]
         public DateTime Utgivningsdatum { get; set; }
 
+        [InverseProperty(nameof(Förlag.BokIsbn13Navigation))]
+        public virtual ICollection<Förlag> Förlags { get; set; }
         [InverseProperty(nameof(LagerSaldo.IsbnNavigation))]
         public virtual ICollection<LagerSaldo> LagerSaldos { get; set; }
 
