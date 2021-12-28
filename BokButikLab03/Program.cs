@@ -106,7 +106,7 @@ int UserIntInput(int answerID)
 int AmountOfBooks(int bookAmount)
 {
     Console.WriteLine("Enter amount of books: ");
-    var answer = Console.ReadLine();
+    string? answer = Console.ReadLine();
     if (answer == null)
     {
         throw new Exception("Enter a value");
@@ -120,7 +120,7 @@ int AmountOfBooks(int bookAmount)
 int WhichStore(int storeID)
 {
     Console.WriteLine("Enter store ID: ");
-   var answer = Console.ReadLine();
+   string? answer = Console.ReadLine();
     if (answer == null)
     {
         throw new ArgumentException("Enter a value");
@@ -134,7 +134,7 @@ int WhichStore(int storeID)
 long WhichISBN(long ISBN)
 {
     Console.WriteLine("Enter ISBN: ");
-    var answer = Console.ReadLine();
+    string? answer = Console.ReadLine();
     if (answer == null)
     {
         throw new Exception("Enter a value");
