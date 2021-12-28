@@ -3,12 +3,11 @@
 using BokButikLab03.Data;
 using BokButikLab03.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+/// <summary>
+/// TODO: Kunna ändra bokISBN?
+/// TODO: Alla kommentarer i en egen metod
+/// Dela upp koden bättre
+/// </summary>
 namespace BokButikLab03
 {
     public static class MenuCommands
@@ -381,13 +380,16 @@ namespace BokButikLab03
     
         private static long InputISBN(long iSBN)
         {
+            Console.WriteLine($"Current ISBN {iSBN}");
+
             string? usrInput;
             do
             {
 
                 Console.WriteLine("Enter ISBN13: ");
+
                  usrInput = Console.ReadLine();
-                if(usrInput == null)
+                if (usrInput == null)
                 {
                     throw new ArgumentException("Input is null");
                 }
@@ -403,6 +405,8 @@ namespace BokButikLab03
 
         private static DateTime DateInput(DateTime addDate)
         {
+            Console.WriteLine($"Current date {addDate}");
+
             string? DateLine;
             do
             {
@@ -420,6 +424,8 @@ namespace BokButikLab03
 
         private static decimal PriceInput(decimal pris)
         {
+            Console.WriteLine($"Current Price {pris}");
+
             string? usrInput;
             do
             {
@@ -428,7 +434,7 @@ namespace BokButikLab03
             
                 usrInput = Console.ReadLine();
             } while (usrInput == null);
-         pris =  Decimal.Parse(usrInput);
+         pris = decimal.Parse(usrInput);
 
 
 
@@ -452,6 +458,9 @@ namespace BokButikLab03
         }
       private static  int IntInput(int answer)
         {
+            Console.WriteLine($"Current input: {answer}");
+
+
             Console.WriteLine("Enter ID: ");
             string? Theanswer = Console.ReadLine();
             if (Theanswer == null)

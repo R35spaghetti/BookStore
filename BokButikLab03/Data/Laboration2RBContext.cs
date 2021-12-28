@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using BokButikLab03.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -38,7 +36,7 @@ namespace BokButikLab03.Data
             if (!optionsBuilder.IsConfigured)
             {
                 var builder = new ConfigurationBuilder()
-   .AddJsonFile($"appsettings.json", true, true);
+                .AddJsonFile($"appsettings.json", true, true);
                 string connectionString =
                 builder.Build().GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(connectionString);

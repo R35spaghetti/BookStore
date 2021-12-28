@@ -1,10 +1,4 @@
 ﻿
-using BokButikLab03.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Configuration;
 using BokButikLab03;
 
 
@@ -95,7 +89,7 @@ int UserIntInput(int answerID)
     string? answer = Console.ReadLine();
     if (answer == null)
     {
-        throw new Exception("Enter a value");
+        throw new Exception($"{answerID} doesn't exist");
     }
     answerID = int.Parse(answer);
 
@@ -109,7 +103,7 @@ int AmountOfBooks(int bookAmount)
     string? answer = Console.ReadLine();
     if (answer == null)
     {
-        throw new Exception("Enter a value");
+        throw new Exception($"{bookAmount} doesn't work");
     }
     bookAmount = int.Parse(answer);
   
@@ -123,7 +117,7 @@ int WhichStore(int storeID)
    string? answer = Console.ReadLine();
     if (answer == null)
     {
-        throw new ArgumentException("Enter a value");
+        throw new ArgumentException($"{storeID} doesn't exist");
     }
     storeID = int.Parse(answer);
  
@@ -137,25 +131,9 @@ long WhichISBN(long ISBN)
     string? answer = Console.ReadLine();
     if (answer == null)
     {
-        throw new Exception("Enter a value");
+        throw new Exception($"{ISBN} doesn't exist");
     }
     ISBN = long.Parse(answer);
     
     return ISBN;
 }
-/*
-
- Scaffold-DbContext "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration2RB;Integrated Security=True;" Microsoft.EntityFrameWorkCore.SqlServer -Table LagerSaldo, Böcker, Författare, FörfattareBöcker, Butiker, Förlag -ContextDir Data -OutputDir Models -DataAnnotations
-
-*/
-
-
-//Checks JSON-file
-/*
-var builder = new ConfigurationBuilder()
-.AddJsonFile($"appsettings.json", true, true);
-string connectionString =
-builder.Build().GetConnectionString("DefaultConnection");
-Console.WriteLine($"Connection String is: {connectionString}");
-Console.ReadKey();
-*/
