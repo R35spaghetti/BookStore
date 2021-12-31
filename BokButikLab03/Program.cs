@@ -1,22 +1,33 @@
 ﻿
 using BokButikLab03;
+using System.Text.RegularExpressions;
 
-
-
+/// <summary>
+/// TODO: Check ISBN with current books in database, same with other keys
+/// TODO: Priser skall endast kunna skrivas med siffror
+/// TODO: try catch? på datuminmatning
+/// </summary>
 {
-    Console.WriteLine("Welcome! Press the corresponding buttons:" +
-    " Show all press 1. | Add books press 2.| \n" +
-    " Remove books press 3. | Add new book title press 4. |  Add new author press 5  \n" +
-    "Delete a book, press 6 | Delete an author press 7 | Edit the author press 8 | Edit the book press 9");
 
-    int StoreID =0, BookAmount =0;
-    long ISBN =0;
+    int StoreID = 0, BookAmount = 0;
+    long ISBN = 0;
 
     do
     {
+        Console.WriteLine(" \n Welcome! Press the corresponding buttons:\n" +
+   " Show all press 1. \n" +
+   " Add books press 2. \n" +
+   " Remove books press 3. \n" +
+   " Add new book title press 4. \n" +
+   " Add new author press 5 \n" +
+   " Delete a book, press 6 \n" +
+   " Delete an author press 7 \n" +
+   " Edit the author press 8 \n" +
+   " Edit the book press 9");
+
         Question();
-   var question = Console.ReadLine();
-  
+        var question = Console.ReadLine();
+
 
         switch (question)
         {
@@ -25,10 +36,10 @@ using BokButikLab03;
                 break;
 
             case "2":
-            ISBN =  WhichISBN(ISBN);
-            StoreID = WhichStore(StoreID);
-             BookAmount =  AmountOfBooks(BookAmount);
-                MenuCommands.AddBooks(ISBN, StoreID, BookAmount); 
+                ISBN = WhichISBN(ISBN);
+                StoreID = WhichStore(StoreID);
+                BookAmount = AmountOfBooks(BookAmount);
+                MenuCommands.AddBooks(ISBN, StoreID, BookAmount);
                 break;
 
             case "3":
@@ -41,7 +52,7 @@ using BokButikLab03;
             case "4":
                 MenuCommands.ShowAuthors();
                 int answerID = 0;
-                 answerID = UserIntInput(answerID);
+                answerID = UserIntInput(answerID);
                 MenuCommands.AddNewBookTitle(answerID);
                 break;
 
@@ -74,66 +85,69 @@ using BokButikLab03;
 
     } while (true);
 
-    
+
     void Question()
     {
         Console.Write("> ");
     }
-    
 
-}
 
-int UserIntInput(int answerID)
-{
-    Console.WriteLine("Enter ID: ");
-    string? answer = Console.ReadLine();
-    if (answer == null)
+    int UserIntInput(int answerID)
     {
-        throw new Exception($"{answerID} doesn't exist");
+        Console.WriteLine("Enter ID: ");
+        string? answer = Console.ReadLine();
+        if (answer == null)
+        {
+            throw new Exception($"{answerID} doesn't exist");
+        }
+        answerID = int.Parse(answer);
+
+
+        return answerID;
     }
-    answerID = int.Parse(answer);
 
-
-    return answerID;
-}
-
-int AmountOfBooks(int bookAmount)
-{
-    Console.WriteLine("Enter amount of books: ");
-    string? answer = Console.ReadLine();
-    if (answer == null)
+    int AmountOfBooks(int bookAmount)
     {
-        throw new Exception($"{bookAmount} doesn't work");
+        Console.WriteLine("Enter amount of books: ");
+        string? answer = Console.ReadLine();
+        if (answer == null)
+        {
+            throw new Exception($"{bookAmount} doesn't work");
+        }
+        bookAmount = int.Parse(answer);
+
+
+        return bookAmount;
     }
-    bookAmount = int.Parse(answer);
-  
 
-    return bookAmount;
-}
-
-int WhichStore(int storeID)
-{
-    Console.WriteLine("Enter store ID: ");
-   string? answer = Console.ReadLine();
-    if (answer == null)
+    int WhichStore(int storeID)
     {
-        throw new ArgumentException($"{storeID} doesn't exist");
+        Console.WriteLine("Enter store ID: ");
+        string? answer = Console.ReadLine();
+        if (answer == null)
+        {
+            throw new ArgumentException($"{storeID} doesn't exist");
+        }
+        storeID = int.Parse(answer);
+
+
+        return storeID;
     }
-    storeID = int.Parse(answer);
- 
 
-    return storeID;
-}
-
-long WhichISBN(long ISBN)
-{
-    Console.WriteLine("Enter ISBN: ");
-    string? answer = Console.ReadLine();
-    if (answer == null)
+    long WhichISBN(long ISBN)
     {
-        throw new Exception($"{ISBN} doesn't exist");
+
+
+
+        Console.WriteLine("Enter ISBN: ");
+        string? answer = Console.ReadLine();
+        UserInputs.RegexCheckInput(answer);
+        if (answer == null)
+        {
+            throw new Exception($"{ISBN} doesn't exist");
+        }
+
+        ISBN = long.Parse(answer);
+        return ISBN;
     }
-    ISBN = long.Parse(answer);
-    
-    return ISBN;
-}
+    }

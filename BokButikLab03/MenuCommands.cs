@@ -49,7 +49,7 @@ namespace BokButikLab03
 
 
                 context.SaveChanges();
-                Console.WriteLine($"{bookAmount} Books added to Store with ID: {storeID} with ISBN {bookTitle}"); //TODO Lägg till i en egen metod
+                Console.WriteLine($"{bookAmount} Books added to Store with ID: {storeID} with ISBN {bookTitle}");
 
             }
 
@@ -68,16 +68,16 @@ namespace BokButikLab03
 
             };
             db.LagerSaldos.Add(n);
-            Console.WriteLine($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books"); //TODO ny metod som skriver meddelandet
+            Console.WriteLine($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books");
             db.SaveChanges();
         }
         /// Add author
  public static void AddNewAuthor ()
         {
            string Förnamn = "Ange förnamn";
-            Förnamn = UserInputs(Förnamn);
+            Förnamn = StringInput(Förnamn);
           string  EfterNamn = "Ange efternamn";
-            EfterNamn = UserInputs(EfterNamn);
+            EfterNamn = StringInput(EfterNamn);
             DateTime Födelsedatum = DateTime.Now;
             Födelsedatum = DateInput(Födelsedatum);
 
@@ -186,12 +186,12 @@ namespace BokButikLab03
                 {
                     Console.WriteLine("Vad vill du ändra?");
                     Console.WriteLine("> ");
-                    strAnswer = UserInputs(strAnswer);
+                    strAnswer = StringInput(strAnswer);
 
                     if (strAnswer.ToLower() == "förnamn")
                     {
                         Console.WriteLine("Ange nytt förnamn");
-                        strAnswer = UserInputs(strAnswer);
+                        strAnswer = StringInput(strAnswer);
                         foundName.Förnamn = strAnswer;
                         Console.WriteLine($"{foundName.Förnamn} sparad");
                     }
@@ -199,7 +199,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "efternamn")
                     {
                         Console.WriteLine("Ange nytt efternamn");
-                        strAnswer = UserInputs(strAnswer);
+                        strAnswer = StringInput(strAnswer);
                         foundName.Efternamn = strAnswer;
                         Console.WriteLine($"{foundName.Efternamn} sparad");
 
@@ -232,6 +232,7 @@ namespace BokButikLab03
 
             var foundName = context.Böckers
                             .First(f => f.Isbn13 == answer);
+            //TODO System.InvalidOperationException try catch
 
 
             if (foundName != null)
@@ -240,12 +241,12 @@ namespace BokButikLab03
                 {
                     Console.WriteLine("Vad vill du ändra?");
                     Console.WriteLine("> ");
-                    strAnswer = UserInputs(strAnswer);
+                    strAnswer = StringInput(strAnswer);
 
                     if (strAnswer.ToLower() == "titel")
                     {
                         Console.WriteLine("Ange ny titel");
-                        strAnswer = UserInputs(strAnswer);
+                        strAnswer = StringInput(strAnswer);
                         foundName.Titel = strAnswer;
                         Console.WriteLine($"{foundName.Titel} sparad");
                     }
@@ -263,7 +264,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "språk")
                     {
                         Console.WriteLine("Ange nytt språk");
-                        strAnswer = UserInputs(strAnswer);
+                        strAnswer = StringInput(strAnswer);
                         foundName.Språk = strAnswer;
                         Console.WriteLine($"{foundName.Språk} sparad");
 
@@ -348,8 +349,8 @@ namespace BokButikLab03
                 var newBookTitle = new Böcker
                 {
                     Isbn13 = ISBN,
-                    Titel = BookTitel = UserInputs(BookTitel),
-                    Språk = Språk = UserInputs(Språk),
+                    Titel = BookTitel = StringInput(BookTitel),
+                    Språk = Språk = StringInput(Språk),
                     Pris = Pris,
                     Utgivningsdatum = AddDate,
 
@@ -389,11 +390,13 @@ namespace BokButikLab03
                 Console.WriteLine("Enter ISBN13: ");
 
                  usrInput = Console.ReadLine();
+                UserInputs.RegexCheckInput(usrInput);
                 if (usrInput == null)
                 {
                     throw new ArgumentException("Input is null");
                 }
                 iSBN = long.Parse(usrInput);
+                //TODO system.overflowException try catch
               
             } while (usrInput == null && iSBN != 13);
         
@@ -441,7 +444,7 @@ namespace BokButikLab03
             return pris;
         }
 
-        private static string UserInputs(string? usrInput)
+        private static string StringInput(string? usrInput)
         {
             Console.WriteLine(usrInput);
             do
