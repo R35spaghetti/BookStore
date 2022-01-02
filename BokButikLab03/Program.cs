@@ -13,18 +13,10 @@ using BokButikLab03;
 
     do
     {
-        Console.WriteLine(" \n Welcome! Press the corresponding buttons:\n" +
-   " Show all press 1. \n" +
-   " Add books press 2. \n" +
-   " Remove books press 3. \n" +
-   " Add new book title press 4. \n" +
-   " Add new author press 5 \n" +
-   " Delete a book, press 6 \n" +
-   " Delete an author press 7 \n" +
-   " Edit the author press 8 \n" +
-   " Edit the book press 9");
 
-        Question();
+        IntroMessage();
+        IdleQuestion();
+
         var question = Console.ReadLine();
 
 
@@ -35,23 +27,23 @@ using BokButikLab03;
                 break;
 
             case "2":
-                ISBN = WhichISBN(ISBN);
-                StoreID = WhichStore(StoreID);
-                BookAmount = AmountOfBooks(BookAmount);
-                MenuCommands.AddBooks(ISBN, StoreID, BookAmount);
+                ISBN = UserInputs.WhichISBN(ISBN);
+                StoreID = UserInputs.WhichStore(StoreID);
+                BookAmount = UserInputs.AmountOfBooks(BookAmount);
+                MenuCommands.UpdateBookStock(ISBN, StoreID, BookAmount);
                 break;
 
             case "3":
-                ISBN = WhichISBN(ISBN);
-                StoreID = WhichStore(StoreID);
-                BookAmount = AmountOfBooks(BookAmount);
+                ISBN = UserInputs.WhichISBN(ISBN);
+                StoreID = UserInputs.WhichStore(StoreID);
+                BookAmount = UserInputs.AmountOfBooks(BookAmount);
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);
                 break;
 
             case "4":
                 MenuCommands.ShowAuthors();
                 int answerID = 0;
-                answerID = UserIntInput(answerID);
+                answerID = UserInputs.EnterAuthorID(answerID);
                 MenuCommands.AddNewBookTitle(answerID);
                 break;
 
@@ -76,7 +68,7 @@ using BokButikLab03;
                 break;
 
             default:
-                Console.WriteLine("Unknown command. ");
+                defaultMessage();
                 break;
 
 
@@ -84,69 +76,27 @@ using BokButikLab03;
 
     } while (true);
 
+    void defaultMessage()
+    {
+        Console.WriteLine("Unknown command. ");
+    }
 
-    void Question()
+    void IntroMessage()
+    {
+        Console.WriteLine(" \n Welcome! Press the corresponding buttons:\n" +
+        " Show all press 1. \n" +
+        " Add books press 2. \n" +
+        " Remove books press 3. \n" +
+        " Add new book title press 4. \n" +
+        " Add new author press 5 \n" +
+        " Delete a book, press 6 \n" +
+        " Delete an author press 7 \n" +
+        " Edit the author press 8 \n" +
+        " Edit the book press 9");
+    }
+
+    void IdleQuestion()
     {
         Console.Write("> ");
     }
-
-
-    int UserIntInput(int answerID)
-    {
-        Console.WriteLine("Enter ID: ");
-        string? answer = Console.ReadLine();
-        if (answer == null)
-        {
-            throw new Exception($"{answerID} doesn't exist");
-        }
-        answerID = int.Parse(answer);
-
-
-        return answerID;
-    }
-
-    int AmountOfBooks(int bookAmount)
-    {
-        Console.WriteLine("Enter amount of books: ");
-        string? answer = Console.ReadLine();
-        if (answer == null)
-        {
-            throw new Exception($"{bookAmount} doesn't work");
-        }
-        bookAmount = int.Parse(answer);
-
-
-        return bookAmount;
-    }
-
-    int WhichStore(int storeID)
-    {
-        Console.WriteLine("Enter store ID: ");
-        string? answer = Console.ReadLine();
-        if (answer == null)
-        {
-            throw new ArgumentException($"{storeID} doesn't exist");
-        }
-        storeID = int.Parse(answer);
-
-
-        return storeID;
-    }
-
-    long WhichISBN(long ISBN)
-    {
-
-
-
-        Console.WriteLine("Enter ISBN: ");
-        string? answer = Console.ReadLine();
-        UserInputs.RegexCheckInput(answer);
-        if (answer == null)
-        {
-            throw new Exception($"{ISBN} doesn't exist");
-        }
-
-        ISBN = long.Parse(answer);
-        return ISBN;
-    }
-    }
+}

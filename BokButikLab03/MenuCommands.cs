@@ -30,7 +30,7 @@ namespace BokButikLab03
         }
 
         //Update current book stock in store 
-        public static void AddBooks(long bookTitle, int storeID, int bookAmount)
+        public static void UpdateBookStock(long bookTitle, int storeID, int bookAmount)
         {
             using var context = new Laboration2RBContext();
             var UpdateBookAmount = context.LagerSaldos
@@ -55,7 +55,7 @@ namespace BokButikLab03
 
         }
 
-        //Add new book to store
+        //Add new book to the store
         static void AddNewBook(int ButikID, long ISBN, int Antal)
         {
             using Laboration2RBContext db = new();
@@ -378,7 +378,7 @@ namespace BokButikLab03
                 Console.WriteLine($" FörfattareID: {authors.Id} - Namn: {authors.Förnamn} {authors.Efternamn}");
             }
         }
-    
+    //sämre version, byt ut
         private static long InputISBN(long iSBN)
         {
             Console.WriteLine($"Current ISBN {iSBN}");
