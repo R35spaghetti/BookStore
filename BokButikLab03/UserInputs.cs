@@ -68,9 +68,14 @@ namespace BokButikLab03
             }
 
             ISBN = long.Parse(answer);
+
+            ISBN = TrycatchCorrectISBN13(ISBN);
+
             return ISBN;
         }
-      public static int AmountOfBooks(int bookAmount)
+
+
+        public static int AmountOfBooks(int bookAmount)
         {
             Console.WriteLine("Enter amount of books: ");
             string? answer = Console.ReadLine();
@@ -100,9 +105,12 @@ namespace BokButikLab03
             }
             answerID = int.Parse(answer);
 
+            answerID = TrycatchCorrectAuthorID(answerID);
 
             return answerID;
         }
+
+
         public static int WhichStore(int storeID)
         {
            
@@ -122,6 +130,32 @@ namespace BokButikLab03
             return storeID;
 
      }
+
+        private static int TrycatchCorrectAuthorID(int answerID)
+        {
+            try
+            {
+                using var context = new Laboration2RBContext();
+                {
+                    var foundID = context.Författares
+
+                    .First(f => f.Id == answerID);
+
+
+                }
+            }
+
+
+
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("ID doesn't exist");
+                answerID = EnterAuthorID(answerID);
+
+            }
+
+            return answerID;
+        }
 
         private static int TrycatchCorrectStoreID(int storeID)
         {
@@ -147,6 +181,32 @@ namespace BokButikLab03
             }
 
             return storeID;
+        }
+
+        private static long TrycatchCorrectISBN13(long iSBN)
+        {
+            try
+            {
+                using var context = new Laboration2RBContext();
+                {
+                    var foundID = context.LagerSaldos
+
+                    .First(f => f.Isbn == iSBN);
+
+
+                }
+            }
+
+
+
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("ISBN13 code doesn't exist!");
+                iSBN = WhichISBN(iSBN);
+
+            }
+
+            return iSBN;
         }
 
         private static void EnterStoreID()
