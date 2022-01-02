@@ -32,10 +32,13 @@ namespace BokButikLab03
         //Update current book stock in store 
         public static void UpdateBookStock(long bookTitle, int storeID, int bookAmount)
         {
+        
+
             using var context = new Laboration2RBContext();
             var UpdateBookAmount = context.LagerSaldos
                 .Where(StoresID => StoresID.ButikId == storeID)
                 .SingleOrDefault(lagret => lagret.Isbn == bookTitle);
+
 
             //lägg till boken
             if (UpdateBookAmount == null)
@@ -53,12 +56,14 @@ namespace BokButikLab03
 
             }
 
+
         }
 
         //Add new book to the store
         static void AddNewBook(int ButikID, long ISBN, int Antal)
         {
-            using Laboration2RBContext db = new();
+
+             using Laboration2RBContext db = new();
             LagerSaldo n = new()
             {
                 ButikId = ButikID,
@@ -67,10 +72,15 @@ namespace BokButikLab03
 
 
             };
+
+
+            using var context = new Laboration2RBContext();
+
             db.LagerSaldos.Add(n);
-            Console.WriteLine($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books");
+            Console.Write($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books");
             db.SaveChanges();
-        }
+            }
+
         /// Add author
  public static void AddNewAuthor ()
         {
@@ -304,7 +314,7 @@ namespace BokButikLab03
             }
         }
 
-        private static void ShowAllISBNs()
+        public static void ShowAllISBNs()
         {
             using var dbContext = new Laboration2RBContext();
             foreach (var isbn in dbContext.Böckers.AsNoTracking()

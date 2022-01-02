@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BokButikLab03.Data;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BokButikLab03
 {
@@ -78,13 +74,15 @@ namespace BokButikLab03
         {
             Console.WriteLine("Enter amount of books: ");
             string? answer = Console.ReadLine();
+            answer = RegexCheckNumberInput(answer);
+            
             if (answer == null)
             {
                 throw new Exception($"{bookAmount} doesn't work");
             }
-            answer = RegexCheckNumberInput(answer);
-            bookAmount = int.Parse(answer);
 
+            bookAmount = int.Parse(answer);
+          
 
             return bookAmount;
         }
@@ -104,28 +102,55 @@ namespace BokButikLab03
 
             return answerID;
         }
-      public static int WhichStore(int storeID)
+        public static int WhichStore(int storeID)
         {
-            EnterStoreID();
+           
+                EnterStoreID();
             string? answer = Console.ReadLine();
+            answer = RegexCheckNumberInput(answer);
+
             if (answer == null)
             {
                 throw new ArgumentException($"{storeID} doesn't exist");
             }
+
             storeID = int.Parse(answer);
 
 
+            try
+            {
+                using var context = new Laboration2RBContext();
+                    {
+                        var foundID = context.LagerSaldos
+
+                        .First(f => f.ButikId == storeID);
+
+                    
+                    }
+                }
+
+
+
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("Store doesn't exist");
+                  storeID =  WhichStore(storeID);
+                
+                }
+            
+            
             return storeID;
-        }
+
+     }
 
         private static void EnterStoreID()
         {
-            Console.WriteLine("Enter store ID: ");
+            Console.Write("Enter store ID: ");
         }
 
         private static void EnterID()
         {
-            Console.WriteLine("Enter ID: ");
+            Console.Write("Enter ID: ");
         }
 
         private static void InputInvalid()
@@ -138,7 +163,7 @@ namespace BokButikLab03
         }
         private static void QuestionISBN13()
         {
-            Console.WriteLine("Enter ISBN: ");
+            Console.Write("Enter ISBN: ");
         }
     }
 }

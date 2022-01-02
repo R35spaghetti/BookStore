@@ -27,6 +27,7 @@ using BokButikLab03;
                 break;
 
             case "2":
+                MenuCommands.ShowAllISBNs();
                 ISBN = UserInputs.WhichISBN(ISBN);
                 StoreID = UserInputs.WhichStore(StoreID);
                 BookAmount = UserInputs.AmountOfBooks(BookAmount);
@@ -34,6 +35,7 @@ using BokButikLab03;
                 break;
 
             case "3":
+                MenuCommands.ShowAllISBNs();
                 ISBN = UserInputs.WhichISBN(ISBN);
                 StoreID = UserInputs.WhichStore(StoreID);
                 BookAmount = UserInputs.AmountOfBooks(BookAmount);
