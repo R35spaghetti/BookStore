@@ -93,6 +93,7 @@ namespace BokButikLab03
         {
             EnterID();
             string? answer = Console.ReadLine();
+            
             if (answer == null)
             {
                 throw new Exception($"{answerID} doesn't exist");
@@ -105,7 +106,7 @@ namespace BokButikLab03
         public static int WhichStore(int storeID)
         {
            
-                EnterStoreID();
+            EnterStoreID();
             string? answer = Console.ReadLine();
             answer = RegexCheckNumberInput(answer);
 
@@ -116,32 +117,37 @@ namespace BokButikLab03
 
             storeID = int.Parse(answer);
 
-
-            try
-            {
-                using var context = new Laboration2RBContext();
-                    {
-                        var foundID = context.LagerSaldos
-
-                        .First(f => f.ButikId == storeID);
-
-                    
-                    }
-                }
-
-
-
-                catch (InvalidOperationException)
-                {
-                    Console.WriteLine("Store doesn't exist");
-                  storeID =  WhichStore(storeID);
-                
-                }
-            
+            storeID = TrycatchCorrectStoreID(storeID);
             
             return storeID;
 
      }
+
+        private static int TrycatchCorrectStoreID(int storeID)
+        {
+            try
+            {
+                using var context = new Laboration2RBContext();
+                {
+                    var foundID = context.LagerSaldos
+
+                    .First(f => f.ButikId == storeID);
+
+
+                }
+            }
+
+
+
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("Store doesn't exist");
+                storeID = WhichStore(storeID);
+
+            }
+
+            return storeID;
+        }
 
         private static void EnterStoreID()
         {

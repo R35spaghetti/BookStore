@@ -5,8 +5,6 @@ using BokButikLab03.Models;
 using Microsoft.EntityFrameworkCore;
 /// <summary>
 /// TODO: Kunna ändra bokISBN?
-/// TODO: Alla kommentarer i en egen metod
-/// Dela upp koden bättre
 /// </summary>
 namespace BokButikLab03
 {
@@ -24,9 +22,16 @@ namespace BokButikLab03
             {
                 var lagerAntal = lager.Antal;
                 var titel = lager.IsbnNavigation.Titel;
-                Console.WriteLine($" ButiksID: {lager.ButikId} - Butiken {lager.Butik.Butiksnamn} har boken {titel} med antal i lager:  {lagerAntal}");
+                var butikId = lager.ButikId;
+                var butiksnamn = lager.Butik.Butiksnamn;
+                ListAllMessage(butikId, butiksnamn, titel, lagerAntal);
             }
 
+        }
+
+        private static void ListAllMessage(int butikId, string butiksnamn, string titel, int lagerAntal)
+        {
+            Console.WriteLine($" ButiksID: {butikId} - Butiken {butiksnamn} har boken {titel} med antal i lager:  {lagerAntal}");
         }
 
         //Update current book stock in store 
@@ -52,11 +57,16 @@ namespace BokButikLab03
 
 
                 context.SaveChanges();
-                Console.WriteLine($"{bookAmount} Books added to Store with ID: {storeID} with ISBN {bookTitle}");
+                UpdateBookMessage(bookAmount, storeID, bookTitle);
 
             }
 
 
+        }
+
+        private static void UpdateBookMessage(int bookAmount, int storeID, long bookTitle)
+        {
+            Console.WriteLine($"{bookAmount} Books added to Store with ID: {storeID} with ISBN {bookTitle}");
         }
 
         //Add new book to the store
@@ -77,12 +87,18 @@ namespace BokButikLab03
             using var context = new Laboration2RBContext();
 
             db.LagerSaldos.Add(n);
-            Console.Write($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books");
+            AddedNewBookMessage(ISBN, ButikID, Antal);
             db.SaveChanges();
             }
 
+        private static void AddedNewBookMessage(long ISBN, int ButikID, int Antal)
+        {
+            Console.Write($"Book added with ISBN13: {ISBN}. At storeID {ButikID} with {Antal} books");
+
+        }
+
         /// Add author
- public static void AddNewAuthor ()
+        public static void AddNewAuthor()
         {
            string Förnamn = "Ange förnamn";
             Förnamn = StringInput(Förnamn);
@@ -106,12 +122,20 @@ namespace BokButikLab03
 
 
             context.Add(newAuthor);
-            Console.WriteLine($" {newAuthor.Förnamn} {newAuthor.Efternamn} added!");
+            var förnamnet = newAuthor.Förnamn;
+            var efternamnet = newAuthor.Efternamn;
+            AddNewAuthorMessage(förnamnet, efternamnet);
             context.SaveChanges();
 
 
 
         }
+
+        private static void AddNewAuthorMessage(string förnamnet, string efternamnet)
+        {
+            Console.WriteLine($" {förnamnet} {efternamnet} added!");
+        }
+
         //Remove book stock
         public static void RemoveBooks(long bookTitle, int storeID, int BookAmount)
         {
@@ -127,13 +151,20 @@ namespace BokButikLab03
             {
                 UpdateBookAmount.Antal -= BookAmount;
                 context.SaveChanges();
-                Console.WriteLine($"Removing {BookAmount} amount of books from {bookTitle} removed from StoreID {storeID}");
+                RemoveBookMessage(BookAmount, bookTitle, storeID);
             }
+
             else
             {
                 throw new Exception("Book doesn't exist!");
             }
         }
+
+        private static void RemoveBookMessage(int bookAmount, long bookTitle, int storeID)
+        {
+            Console.WriteLine($"Removing {bookAmount} amount of books from {bookTitle} removed from StoreID {storeID}");
+        }
+
         //Remove a book based on ISBN
         public static void RemoveTheBook()
         {
@@ -151,11 +182,17 @@ namespace BokButikLab03
                 
                    
                 context.Böckers.Remove(book);
-                Console.WriteLine("Book removed");
+                BookRemovedMessage();
                 context.SaveChanges();
 
             };
         }
+
+        private static void BookRemovedMessage()
+        {
+            Console.WriteLine("Book removed");
+        }
+
         public static void RemoveTheAuthor()
         {
             using (var context = new Laboration2RBContext())
@@ -171,15 +208,23 @@ namespace BokButikLab03
 
 
                 context.Författares.Remove(författare);
-                Console.WriteLine("Author removed");
+                AuthorRemovedMessage();
                 context.SaveChanges();
 
             };
         }
+
+        private static void AuthorRemovedMessage()
+        {
+            Console.WriteLine("Author removed");
+        }
+      
+
+        //TODO: Kanske en metod för att hitta författare/isbn?
         public static void EditTheAuthor()
         {
             ShowAllAuthors();
-            Console.WriteLine("Skriv ID på vem som du vill ändra");
+            InputPromptMessage();
             int answer = 0;
             string strAnswer = "";
             answer = IntInput(answer);
@@ -194,33 +239,37 @@ namespace BokButikLab03
             {
                 do
                 {
-                    Console.WriteLine("Vad vill du ändra?");
-                    Console.WriteLine("> ");
+                    ChangeWhatMessage();
+                    PromptIcon();
                     strAnswer = StringInput(strAnswer);
 
                     if (strAnswer.ToLower() == "förnamn")
                     {
-                        Console.WriteLine("Ange nytt förnamn");
+                        EnterFirstNameMessage();
                         strAnswer = StringInput(strAnswer);
                         foundName.Förnamn = strAnswer;
-                        Console.WriteLine($"{foundName.Förnamn} sparad");
+                        var FoundFirstName = foundName.Förnamn;
+                        FirstNameSavedMessage(FoundFirstName);
                     }
 
                     else if (strAnswer.ToLower() == "efternamn")
                     {
-                        Console.WriteLine("Ange nytt efternamn");
+                        EnterLastNameMessage();
                         strAnswer = StringInput(strAnswer);
                         foundName.Efternamn = strAnswer;
-                        Console.WriteLine($"{foundName.Efternamn} sparad");
+                        var FoundLastname = foundName.Efternamn;
+                        LastnameSavedMessage(FoundLastname);
+
 
                     }
                     else if (strAnswer.ToLower() == "födelsedatum")
                     {
-                        Console.WriteLine("Ange nytt datum");
+                        EnterNewDateMessage();
                         DateTime AddDate = DateTime.Now;
                         AddDate = DateInput(AddDate);
                         foundName.Födelsedatum = AddDate;
-                        Console.WriteLine($"{foundName.Födelsedatum} sparad");
+                        var FoundDate = foundName.Födelsedatum;
+                        DateSavedMessage(FoundDate);
 
                     }
                     context.SaveChanges();
@@ -229,10 +278,56 @@ namespace BokButikLab03
             }
 
         }
+
+        private static void DateSavedMessage(DateTime foundDate)
+        {
+            Console.WriteLine($"{foundDate} sparad");
+        }
+
+        private static void EnterNewDateMessage()
+        {
+            Console.WriteLine("Ange nytt datum");
+        }
+
+        private static void LastnameSavedMessage(string foundLastname)
+        {
+            Console.WriteLine($"{foundLastname} sparad");
+        }
+
+        private static void EnterLastNameMessage()
+        {
+            Console.WriteLine("Ange nytt efternamn");
+        }
+
+        private static void FirstNameSavedMessage(string foundFirstName)
+        {
+            Console.WriteLine($"{foundFirstName} sparad");
+        }
+
+        private static void EnterFirstNameMessage()
+        {
+            Console.WriteLine("Ange nytt förnamn");
+        }
+
+        private static void PromptIcon()
+        {
+            Console.WriteLine("> ");
+        }
+
+        private static void ChangeWhatMessage()
+        {
+            Console.WriteLine("Vad vill du ändra? Skriv namn på det som du vill ändra, skriv inget för att avsluta");
+        }
+
+        private static void InputPromptMessage()
+        {
+            Console.WriteLine("Skriv ID på vem som du vill ändra");
+        }
+
         public static void EditTheBook()
         {
             ShowAllISBNs();
-            Console.WriteLine("Skriv ISBN på vilken bok som du vill ändra");
+            EnterISBNMessage();
             long answer = 0;
             string strAnswer = "";
             decimal newPrice = 0;
@@ -242,7 +337,6 @@ namespace BokButikLab03
 
             var foundName = context.Böckers
                             .First(f => f.Isbn13 == answer);
-            //TODO System.InvalidOperationException try catch
 
 
             if (foundName != null)
@@ -266,7 +360,7 @@ namespace BokButikLab03
                         {
                             Console.WriteLine("Ange nytt isbn13 (minst 13 tecken): ");
                             answer = InputISBN(answer);
-                        } while (answer == 13);
+                        } while (answer == 13); //TODO ÄNDRA HÄR
                         foundName.Isbn13 = answer;
                         Console.WriteLine($"{foundName.Isbn13} sparad");
                     }
@@ -303,15 +397,27 @@ namespace BokButikLab03
 
         }
 
-   
+        private static void EnterISBNMessage()
+        {
+            Console.WriteLine("Skriv ISBN på vilken bok som du vill ändra");
+        }
+
         private static void ShowAllAuthors()
         {
             using var dbContext = new Laboration2RBContext();
             foreach (var författare in dbContext.Författares.AsNoTracking()
                   .OrderBy(f => f.Id))
             {
-                Console.WriteLine($"{författare.Id} | {författare.Förnamn} {författare.Efternamn}");
+                var FörfattarensID = författare.Id;
+                var Förnamnet = författare.Förnamn;
+                var Efternamnet = författare.Efternamn;
+                ShowAllAuthorsMessage(FörfattarensID, Förnamnet, Efternamnet);
             }
+        }
+
+        private static void ShowAllAuthorsMessage(int författarensID, string förnamnet, string efternamnet)
+        {
+            Console.WriteLine($"{författarensID} | {förnamnet} {efternamnet}");
         }
 
         public static void ShowAllISBNs()
@@ -320,8 +426,15 @@ namespace BokButikLab03
             foreach (var isbn in dbContext.Böckers.AsNoTracking()
                   .OrderBy(bokens => bokens.Titel))
             {
-                Console.WriteLine($"{isbn.Titel} | {isbn.Isbn13}");
+                var titeln = isbn.Titel;
+                var isbn13 = isbn.Isbn13;
+                ShowAllISBNMessage(titeln, isbn13);
             }
+        }
+
+        private static void ShowAllISBNMessage(string titeln, long isbn13)
+        {
+            Console.WriteLine($"{titeln} | {isbn13}");
         }
 
         /// <summary>
@@ -366,7 +479,7 @@ namespace BokButikLab03
 
 
                 };
-                //Add to junction table, x de
+                //Adds to junction table
                 newBookTitle.Författares.Add(foundAuthor);
 
 
