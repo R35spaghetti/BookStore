@@ -3,7 +3,7 @@ using BokButikLab03;
 
 /// <summary>
 /// TODO: Om man behöver ändra isbn i samband med titel
-/// TODO Förbättra vissa cw-meddelanden, ha också console.clear
+/// TODO Förbättra vissa cw-meddelanden
 /// </summary>
 {
 
@@ -27,7 +27,7 @@ using BokButikLab03;
 
             case "2":
                 MenuCommands.ShowAllISBNs();
-                ISBN = UserInputs.WhichISBN(ISBN);
+                ISBN = UserInputs.WhichISBN13ForBookTable(ISBN);
                 StoreID = UserInputs.WhichStore(StoreID);
                 BookAmount = UserInputs.AmountOfBooks(BookAmount);
                 MenuCommands.UpdateBookStock(ISBN, StoreID, BookAmount);
@@ -35,7 +35,7 @@ using BokButikLab03;
 
             case "3":
                 MenuCommands.ShowAllISBNs();
-                ISBN = UserInputs.WhichISBN(ISBN);
+                ISBN = UserInputs.WhichISBN13ForBookTable(ISBN);
                 StoreID = UserInputs.WhichStore(StoreID);
                 BookAmount = UserInputs.AmountOfBooks(BookAmount);
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);

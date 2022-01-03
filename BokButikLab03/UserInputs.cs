@@ -69,7 +69,6 @@ namespace BokButikLab03
                 if (result == false)
                 {
                     InputInvalid();
-                   // TryAgain();
                     input = Console.ReadLine();
 
                 }
@@ -79,11 +78,10 @@ namespace BokButikLab03
         }
         public static string StringInput(string? usrInput)
         {
-            Console.WriteLine(usrInput);
             do
             {
 
-                Console.Write("Enter value:> ");
+                Console.Write("> ");
                 usrInput = Console.ReadLine();
             } while (usrInput == null || usrInput.Trim() == "");
 
@@ -93,7 +91,7 @@ namespace BokButikLab03
             return usrInput;
         }
 
-
+/* TODO TA BORT OM WHICHISBN13 FUNKAR ISTÄLLET
         public static long WhichISBN(long ISBN)
         {
 
@@ -112,6 +110,7 @@ namespace BokButikLab03
 
             return ISBN;
         }
+        */
         public static long AddAnotherISBN(long ISBN)
         {
             bool flag = true;
@@ -213,8 +212,8 @@ namespace BokButikLab03
      }
         public static DateTime DateInput(DateTime addDate)
         {
-            ShowCurrentDateMessage(addDate);
-
+            ShowCurrentDateMessage();
+            
 
             string? DateLine;
             do
@@ -376,7 +375,7 @@ namespace BokButikLab03
             Console.WriteLine("Store doesn't exist");
 
         }
-
+/* TODO TA BORT OM ISBN13SÖKERFUNKAR
         private static long TrycatchCorrectISBN13(long iSBN)
         {
             try
@@ -402,7 +401,7 @@ namespace BokButikLab03
 
             return iSBN;
         }
-
+*/
         private static void ISBN13AlreadyExistMessage()
         {
             Console.WriteLine("ISBN13 code doesn't exist!");
@@ -422,7 +421,7 @@ namespace BokButikLab03
         {
             Console.Write("Enter date: ");
         }
-        private static void ShowCurrentDateMessage(DateTime addDate)
+        private static void ShowCurrentDateMessage()
         {
             Console.WriteLine($"Enter date as yyyy-mm-dd");
         }
