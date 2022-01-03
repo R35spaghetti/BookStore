@@ -3,6 +3,7 @@ using BokButikLab03;
 
 /// <summary>
 /// TODO: Om man behöver ändra isbn i samband med titel
+/// TODO Förbättra vissa cw-meddelanden, ha också console.clear
 /// </summary>
 {
 
