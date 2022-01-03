@@ -42,7 +42,7 @@ namespace BokButikLab03
                 .SingleOrDefault(lagret => lagret.Isbn == bookTitle);
 
 
-            //lägg till boken
+            //adds books to stock
             if (UpdateBookAmount == null)
             {
                 AddNewBook(storeID, bookTitle, bookAmount);
@@ -101,7 +101,7 @@ namespace BokButikLab03
             Förnamn = UserInputs.StringInput(Förnamn);
           string  EfterNamn = "Ange efternamn";
             EfterNamn = UserInputs.StringInput(EfterNamn);
-            DateTime Födelsedatum = DateTime.Now;
+            DateTime Födelsedatum = new(1900,01,01);
             Födelsedatum = UserInputs.DateInput(Födelsedatum);
 
             using var context = new Laboration2RBContext();
@@ -260,7 +260,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "födelsedatum")
                     {
                         EnterNewDateMessage();
-                        DateTime AddDate = DateTime.Now;
+                        DateTime AddDate = new(1900, 01, 01);
                         AddDate = UserInputs.DateInput(AddDate);
                         foundName.Födelsedatum = AddDate;
                         var FoundDate = foundName.Födelsedatum;
@@ -377,7 +377,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "utgivningsdatum")
                     {
                         GiveNewDateMessage();
-                        DateTime AddDate = DateTime.Now;
+                        DateTime AddDate = new(1900, 01, 01);
                         AddDate = UserInputs.DateInput(AddDate);
                      var NewDate =  foundName.Utgivningsdatum = AddDate;
                         DateUpdated(NewDate);
@@ -497,7 +497,7 @@ namespace BokButikLab03
             decimal Pris = 0;
             Pris = UserInputs.PriceInput(Pris);
 
-            DateTime AddDate = DateTime.Now;
+            DateTime AddDate = new(1900, 01, 01);
             AddDate = UserInputs.DateInput(AddDate);
 
                 using var context = new Laboration2RBContext();

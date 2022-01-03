@@ -56,7 +56,7 @@ namespace BokButikLab03
         }
         public static string? RegexCheckDecimalInput(string? input)
         {
-            Regex Check = new(@"^(\d*)$"); //decimal
+            Regex Check = new(@"^([\d,\d]*)$"); //decimal
             bool result;
             do
             {
@@ -83,9 +83,9 @@ namespace BokButikLab03
             do
             {
 
-                Console.WriteLine("Enter value:> ");
+                Console.Write("Enter value:> ");
                 usrInput = Console.ReadLine();
-            } while (usrInput == null);
+            } while (usrInput == null || usrInput == "");
 
 
 
@@ -242,7 +242,7 @@ namespace BokButikLab03
                 CostOfBookMessage();
 
                 usrInput = Console.ReadLine();
-            } while (usrInput == null);
+            } while (usrInput == null || usrInput == "0" || usrInput == ",");
           usrInput = RegexCheckDecimalInput(usrInput);
             if(usrInput == null)
             {
@@ -389,21 +389,21 @@ namespace BokButikLab03
         }
         private static void CurrentPriceMessage(decimal pris)
         {
-            Console.WriteLine($"Current Price {pris}");
+            Console.WriteLine($"Insert higher than {pris}");
         }
 
         private static void CostOfBookMessage()
         {
-            Console.WriteLine("Enter cost of book: ");
+            Console.Write("Enter cost of book: ");
         }
 
         private static void EnterDateMessage()
         {
-            Console.WriteLine("Enter date: ");
+            Console.Write("Enter date: ");
         }
         private static void ShowCurrentDateMessage(DateTime addDate)
         {
-            Console.WriteLine($"Current date {addDate}");
+            Console.WriteLine($"Enter date as {addDate}");
         }
 
 

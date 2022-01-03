@@ -41,7 +41,9 @@ using BokButikLab03;
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);
                 break;
 
-                //TODO kolla pris, titel och datum
+                //TODO pris ska inte kunna ha en nolla
+                //TODO titel får inte vara tom
+                //TODO ett felmeddelande med datum?
             case "4":
                 MenuCommands.ShowAuthors();
                 int answerID = 0;
