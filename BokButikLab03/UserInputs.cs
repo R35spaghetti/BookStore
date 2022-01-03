@@ -54,6 +54,29 @@ namespace BokButikLab03
             } while (!result);
             return input;
         }
+        public static string? RegexCheckDecimalInput(string? input)
+        {
+            Regex Check = new(@"^(\d*)$"); //decimal
+            bool result;
+            do
+            {
+                if (input == null)
+                {
+                    throw new Exception("input is null");
+                }
+                result = Check.IsMatch(input);
+
+                if (result == false)
+                {
+                    InputInvalid();
+                    TryAgain();
+                    input = Console.ReadLine();
+
+                }
+
+            } while (!result);
+            return input;
+        }
 
         public static long WhichISBN(long ISBN)
         {
@@ -130,6 +153,52 @@ namespace BokButikLab03
             return storeID;
 
      }
+        public static DateTime DateInput(DateTime addDate)
+        {
+            ShowCurrentDateMessage(addDate);
+
+
+            string? DateLine;
+            do
+            {
+                EnterDateMessage();
+
+                DateLine = Console.ReadLine();
+                if (DateLine == null)
+                {
+                    throw new Exception("DateLine is null");
+                }
+            } while (!DateTime.TryParseExact(DateLine, "yyyy/mm/dd", null, System.Globalization.DateTimeStyles.None, out addDate));
+
+            return addDate;
+        }
+
+      
+        public static decimal PriceInput(decimal pris)
+        {
+            CurrentPriceMessage(pris);
+
+            string? usrInput;
+            do
+            {
+                CostOfBookMessage();
+
+                usrInput = Console.ReadLine();
+            } while (usrInput == null);
+          usrInput = RegexCheckDecimalInput(usrInput);
+            if(usrInput == null)
+            {
+                throw new Exception("Input is null");
+            }
+
+            pris = decimal.Parse(usrInput);
+
+
+
+            return pris;
+        }
+
+   
 
         private static int TrycatchCorrectAuthorID(int answerID)
         {
@@ -208,6 +277,25 @@ namespace BokButikLab03
 
             return iSBN;
         }
+        private static void CurrentPriceMessage(decimal pris)
+        {
+            Console.WriteLine($"Current Price {pris}");
+        }
+
+        private static void CostOfBookMessage()
+        {
+            Console.WriteLine("Enter cost of book: ");
+        }
+
+        private static void EnterDateMessage()
+        {
+            Console.WriteLine("Enter date: ");
+        }
+        private static void ShowCurrentDateMessage(DateTime addDate)
+        {
+            Console.WriteLine($"Current date {addDate}");
+        }
+
 
         private static void EnterStoreID()
         {

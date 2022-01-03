@@ -105,7 +105,7 @@ namespace BokButikLab03
           string  EfterNamn = "Ange efternamn";
             EfterNamn = StringInput(EfterNamn);
             DateTime Födelsedatum = DateTime.Now;
-            Födelsedatum = DateInput(Födelsedatum);
+            Födelsedatum = UserInputs.DateInput(Födelsedatum);
 
             using var context = new Laboration2RBContext();
 
@@ -172,7 +172,7 @@ namespace BokButikLab03
             {
                long ISBN = 0;
                 ShowAllISBNs();
-               ISBN = InputISBN(ISBN);
+           //TODO    ISBN = UserInputs.(ISBN); SÖKER I BOKTABELLEN
 
                 var book = context.Böckers
                     .Include(b=>b.Författares)
@@ -199,7 +199,7 @@ namespace BokButikLab03
             {
                 int ID = 0;
                 ShowAllAuthors();
-                ID = IntInput(ID);
+                ID = IntInput(ID); //TODO kolla med authormetoderna i userinputs
 
                 var författare = context.Författares
                     .Include(b => b.BöckerIsbns)
@@ -266,7 +266,7 @@ namespace BokButikLab03
                     {
                         EnterNewDateMessage();
                         DateTime AddDate = DateTime.Now;
-                        AddDate = DateInput(AddDate);
+                        AddDate = UserInputs.DateInput(AddDate);
                         foundName.Födelsedatum = AddDate;
                         var FoundDate = foundName.Födelsedatum;
                         DateSavedMessage(FoundDate);
@@ -331,13 +331,13 @@ namespace BokButikLab03
             long answer = 0;
             string strAnswer = "";
             decimal newPrice = 0;
-            answer = InputISBN(answer);
+          //TODO  answer = InputISBN(answer); SÖKER I BÖCKERTABELLEN
 
             using var context = new Laboration2RBContext();
 
             var foundName = context.Böckers
                             .First(f => f.Isbn13 == answer);
-
+            //TODO kraschar här då du inte har någon sök till just denna tabel än i USerinputs
 
             if (foundName != null)
             {
@@ -359,7 +359,7 @@ namespace BokButikLab03
                         do
                         {
                             Console.WriteLine("Ange nytt isbn13 (minst 13 tecken): ");
-                            answer = InputISBN(answer);
+                       //TODO     answer = InputISBN(answer); //BOKTABELLEN
                         } while (answer == 13); //TODO ÄNDRA HÄR
                         foundName.Isbn13 = answer;
                         Console.WriteLine($"{foundName.Isbn13} sparad");
@@ -376,7 +376,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "pris")
                     {
                         Console.WriteLine("Ange nytt pris");
-                        newPrice = PriceInput(newPrice);
+                        newPrice = UserInputs.PriceInput(newPrice);
                         foundName.Pris = answer;
                         Console.WriteLine($"{foundName.Pris} sparad");
 
@@ -385,7 +385,7 @@ namespace BokButikLab03
                     {
                         Console.WriteLine("Ange nytt datum");
                         DateTime AddDate = DateTime.Now;
-                        AddDate = DateInput(AddDate);
+                        AddDate = UserInputs.DateInput(AddDate);
                         foundName.Utgivningsdatum = AddDate;
                         Console.WriteLine($"{foundName.Utgivningsdatum} sparad");
 
@@ -447,16 +447,16 @@ namespace BokButikLab03
             Console.WriteLine("Vilken bok vill du lägga till?");
 
         {   long ISBN = 0;
-            ISBN = InputISBN(ISBN);
+            ISBN = UserInputs.WhichISBN(ISBN);
 
             String BookTitel = "Enter title name: ";
             string Språk = "Enter language: ";
 
             decimal Pris = 0;
-            Pris = PriceInput(Pris);
+            Pris = UserInputs.PriceInput(Pris);
 
             DateTime AddDate = DateTime.Now;
-            AddDate = DateInput(AddDate);
+            AddDate = UserInputs.DateInput(AddDate);
 
                 using var context = new Laboration2RBContext();
 
@@ -501,72 +501,11 @@ namespace BokButikLab03
                 Console.WriteLine($" FörfattareID: {authors.Id} - Namn: {authors.Förnamn} {authors.Efternamn}");
             }
         }
-    //sämre version, byt ut
-        private static long InputISBN(long iSBN)
-        {
-            Console.WriteLine($"Current ISBN {iSBN}");
-
-            string? usrInput;
-            do
-            {
-
-                Console.WriteLine("Enter ISBN13: ");
-
-                 usrInput = Console.ReadLine();
-                UserInputs.RegexCheckInput(usrInput);
-                if (usrInput == null)
-                {
-                    throw new ArgumentException("Input is null");
-                }
-                iSBN = long.Parse(usrInput);
-                //TODO system.overflowException try catch
-              
-            } while (usrInput == null && iSBN != 13);
-        
 
 
+  
 
-            return iSBN;
-        }
-
-        private static DateTime DateInput(DateTime addDate)
-        {
-            Console.WriteLine($"Current date {addDate}");
-
-            string? DateLine;
-            do
-            {
-                Console.WriteLine("Enter date: ");
-           
-                DateLine = Console.ReadLine();
-                if (DateLine == null)
-                {
-                    throw new Exception("DateLine is null");
-                }
-            } while (!DateTime.TryParseExact(DateLine, "yyyy/mm/dd", null, System.Globalization.DateTimeStyles.None, out addDate));
-               
-            return addDate;
-        }
-
-        private static decimal PriceInput(decimal pris)
-        {
-            Console.WriteLine($"Current Price {pris}");
-
-            string? usrInput;
-            do
-            {
-
-                Console.WriteLine("Enter cost of book: ");
-            
-                usrInput = Console.ReadLine();
-            } while (usrInput == null);
-         pris = decimal.Parse(usrInput);
-
-
-
-            return pris;
-        }
-
+     //TODO strings o intinput kvar. intinput kan behöva vara authorID check
         private static string StringInput(string? usrInput)
         {
             Console.WriteLine(usrInput);

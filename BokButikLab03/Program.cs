@@ -3,8 +3,7 @@ using BokButikLab03;
 
 /// <summary>
 /// TODO: Check ISBN with current books in database, same with other keys
-/// TODO: Priser skall endast kunna skrivas med siffror
-/// TODO: try catch? på datuminmatning
+/// TODO: FELHANTERING OCH ATT KUNNA SÖKA TILL RÄTT TABELL
 /// </summary>
 {
 
