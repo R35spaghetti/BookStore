@@ -489,9 +489,9 @@ namespace BokButikLab03
             EnterBookTitleMessage();
 
         {   long ISBN = 0;
-            ISBN = UserInputs.WhichISBN(ISBN);
+            ISBN = UserInputs.AddAnotherISBN(ISBN);
 
-            String BookTitel = "Enter title name: ";
+            string BookTitel = "Enter title name: ";
             string Språk = "Enter language: ";
 
             decimal Pris = 0;
@@ -523,7 +523,7 @@ namespace BokButikLab03
                 };
                 //Adds to junction table
                 newBookTitle.Författares.Add(foundAuthor);
-
+                // TODO krasch om flera författare läggs till, om samma bok försöker läggas till igen 
 
                 context.Add(newBookTitle);
                 SavedNewBookMessage(newBookTitle);

@@ -112,6 +112,29 @@ namespace BokButikLab03
 
             return ISBN;
         }
+        public static long AddAnotherISBN(long ISBN)
+        {
+            bool flag = true;
+
+            do
+            {
+
+
+                QuestionISBN13();
+                string? answer = Console.ReadLine();
+                answer = RegexCheckInput(answer);
+                if (answer == null)
+                {
+                    throw new Exception($"{ISBN} value is invalid");
+                }
+
+                ISBN = long.Parse(answer);
+
+                flag = FindISBN(ISBN, flag);
+            } while (flag);
+
+            return ISBN;
+        }
         public static long WhichISBN13ForBookTable(long ISBN)
         {
 
@@ -156,7 +179,7 @@ namespace BokButikLab03
         {
             EnterID();
             string? answer = Console.ReadLine();
-            
+            answer = RegexCheckNumberInput(answer);
             if (answer == null)
             {
                 throw new Exception($"{answerID} doesn't exist");
@@ -231,6 +254,34 @@ namespace BokButikLab03
 
 
             return pris;
+        }
+
+        private static bool FindISBN(long iSBN, bool flag)
+        {
+            
+                using var context = new Laboration2RBContext();
+                {
+               
+                    var foundID = context.Böckers
+
+                    .Find(iSBN);
+
+                    if (foundID == null)
+                    {
+                    flag = false;
+                    return flag;
+
+                    }
+                    else
+                    {
+                    Console.WriteLine("ISBN already exist!");
+                    return flag;
+                    }
+
+
+
+                }
+ 
         }
 
         private static long TrycatchCorrectISBN13BookTable(long iSBN)

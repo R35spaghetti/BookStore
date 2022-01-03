@@ -2,7 +2,7 @@
 using BokButikLab03;
 
 /// <summary>
-/// TODO: Om behöver ändra isbn i samband med titel
+/// TODO: Om man behöver ändra isbn i samband med titel
 /// TODO: FELHANTERING
 /// </summary>
 {
@@ -41,6 +41,7 @@ using BokButikLab03;
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);
                 break;
 
+                //TODO kolla pris, titel och datum
             case "4":
                 MenuCommands.ShowAuthors();
                 int answerID = 0;
