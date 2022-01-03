@@ -523,7 +523,7 @@ namespace BokButikLab03
                 };
                 //Adds to junction table
                 newBookTitle.Författares.Add(foundAuthor);
-                // TODO krasch om flera författare läggs till, om samma bok försöker läggas till igen 
+                // TODO krasch om flera författare läggs till, en bok med flera författare
 
                 context.Add(newBookTitle);
                 SavedNewBookMessage(newBookTitle);

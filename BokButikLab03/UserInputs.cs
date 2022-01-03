@@ -85,7 +85,7 @@ namespace BokButikLab03
 
                 Console.Write("Enter value:> ");
                 usrInput = Console.ReadLine();
-            } while (usrInput == null || usrInput == "");
+            } while (usrInput == null || usrInput.Trim() == "");
 
 
 
@@ -252,8 +252,6 @@ namespace BokButikLab03
 
             pris = decimal.Parse(usrInput);
 
-            //try catch format exeception
-
             return pris;
         }
 
@@ -275,7 +273,7 @@ namespace BokButikLab03
                     }
                     else
                     {
-                    Console.WriteLine("ISBN already exist!");
+                    ISBNAlreadyExistsMessage();
                     return flag;
                     }
 
@@ -283,6 +281,11 @@ namespace BokButikLab03
 
                 }
  
+        }
+
+        private static void ISBNAlreadyExistsMessage()
+        {
+            Console.WriteLine("ISBN already exist!");
         }
 
         private static long TrycatchCorrectISBN13BookTable(long iSBN)
@@ -303,7 +306,7 @@ namespace BokButikLab03
 
             catch (InvalidOperationException)
             {
-                Console.WriteLine("ISBN13 code doesn't exist!");
+                ISBN13AlreadyExistMessage();
                 iSBN = WhichISBN13ForBookTable(iSBN);
 
             }
@@ -329,12 +332,17 @@ namespace BokButikLab03
 
             catch (InvalidOperationException)
             {
-                Console.WriteLine("ID doesn't exist");
+                IDDontExistMessage();
                 answerID = EnterAuthorID(answerID);
 
             }
 
             return answerID;
+        }
+
+        private static void IDDontExistMessage()
+        {
+            Console.WriteLine("ID doesn't exist");
         }
 
         private static int TrycatchCorrectStoreID(int storeID)
@@ -355,12 +363,18 @@ namespace BokButikLab03
 
             catch (InvalidOperationException)
             {
-                Console.WriteLine("Store doesn't exist");
+                StoreDontExistMessage();
                 storeID = WhichStore(storeID);
 
             }
 
             return storeID;
+        }
+
+        private static void StoreDontExistMessage()
+        {
+            Console.WriteLine("Store doesn't exist");
+
         }
 
         private static long TrycatchCorrectISBN13(long iSBN)
@@ -381,13 +395,19 @@ namespace BokButikLab03
 
             catch (InvalidOperationException)
             {
-                Console.WriteLine("ISBN13 code doesn't exist!");
+                ISBN13AlreadyExistMessage();
                 iSBN = WhichISBN(iSBN);
 
             }
 
             return iSBN;
         }
+
+        private static void ISBN13AlreadyExistMessage()
+        {
+            Console.WriteLine("ISBN13 code doesn't exist!");
+        }
+
         private static void CurrentPriceMessage(decimal pris)
         {
             Console.WriteLine($"Insert higher than {pris}");
@@ -404,7 +424,7 @@ namespace BokButikLab03
         }
         private static void ShowCurrentDateMessage(DateTime addDate)
         {
-            Console.WriteLine($"Enter date as {addDate}");
+            Console.WriteLine($"Enter date as yyyy-mm-dd");
         }
 
 

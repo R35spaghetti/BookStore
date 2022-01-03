@@ -40,8 +40,6 @@ using BokButikLab03;
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);
                 break;
 
-                //TODO titel o language får inte ha tomluft, kör en Trim()
-                //TODO ett felmeddelande med datum?
             case "4":
                 MenuCommands.ShowAuthors();
                 int answerID = 0;
