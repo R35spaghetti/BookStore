@@ -56,7 +56,7 @@ namespace BokButikLab03
         }
         public static string? RegexCheckDecimalInput(string? input)
         {
-            Regex Check = new(@"^([\d,\d]*)$"); //decimal
+            Regex Check = new(@"^([\d,\d]*)$"); //sluta och börja på decimal, tillåter att ha , i sig. Nej jag vill inte ha . just nu
             bool result;
             do
             {
@@ -69,11 +69,11 @@ namespace BokButikLab03
                 if (result == false)
                 {
                     InputInvalid();
-                    TryAgain();
+                   // TryAgain();
                     input = Console.ReadLine();
 
                 }
-
+                
             } while (!result);
             return input;
         }
@@ -242,16 +242,17 @@ namespace BokButikLab03
                 CostOfBookMessage();
 
                 usrInput = Console.ReadLine();
-            } while (usrInput == null || usrInput == "0" || usrInput == ",");
-          usrInput = RegexCheckDecimalInput(usrInput);
-            if(usrInput == null)
-            {
-                throw new Exception("Input is null");
-            }
+                if (usrInput == null)
+                {
+                    throw new Exception("Input is null");
+                }
+                usrInput = RegexCheckDecimalInput(usrInput.Trim());
+            } while (usrInput == null || usrInput == "" || usrInput == "," || usrInput == "0");
+        
 
             pris = decimal.Parse(usrInput);
 
-
+            //try catch format exeception
 
             return pris;
         }

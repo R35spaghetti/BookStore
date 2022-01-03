@@ -501,7 +501,7 @@ namespace BokButikLab03
             AddDate = UserInputs.DateInput(AddDate);
 
                 using var context = new Laboration2RBContext();
-                //TODO vad händer om det krockar?
+
                 var foundAuthor = context.Författares
                     .SingleOrDefault(author => author.Id == answerID);
 
