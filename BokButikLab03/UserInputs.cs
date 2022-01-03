@@ -77,6 +77,22 @@ namespace BokButikLab03
             } while (!result);
             return input;
         }
+        public static string StringInput(string? usrInput)
+        {
+            Console.WriteLine(usrInput);
+            do
+            {
+
+                Console.WriteLine("Enter value:> ");
+                usrInput = Console.ReadLine();
+            } while (usrInput == null);
+
+
+
+
+            return usrInput;
+        }
+
 
         public static long WhichISBN(long ISBN)
         {
@@ -96,6 +112,25 @@ namespace BokButikLab03
 
             return ISBN;
         }
+        public static long WhichISBN13ForBookTable(long ISBN)
+        {
+
+
+            QuestionISBN13();
+            string? answer = Console.ReadLine();
+            answer = RegexCheckInput(answer);
+            if (answer == null)
+            {
+                throw new Exception($"{ISBN} doesn't exist");
+            }
+
+            ISBN = long.Parse(answer);
+
+            ISBN = TrycatchCorrectISBN13BookTable(ISBN);
+
+            return ISBN;
+        }
+
 
 
         public static int AmountOfBooks(int bookAmount)
@@ -198,7 +233,31 @@ namespace BokButikLab03
             return pris;
         }
 
-   
+        private static long TrycatchCorrectISBN13BookTable(long iSBN)
+        {
+            try
+            {
+                using var context = new Laboration2RBContext();
+                {
+                    var foundID = context.Böckers
+
+                    .First(f => f.Isbn13 == iSBN);
+
+
+                }
+            }
+
+
+
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("ISBN13 code doesn't exist!");
+                iSBN = WhichISBN13ForBookTable(iSBN);
+
+            }
+
+            return iSBN;
+        }
 
         private static int TrycatchCorrectAuthorID(int answerID)
         {

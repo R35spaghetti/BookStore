@@ -2,8 +2,8 @@
 using BokButikLab03;
 
 /// <summary>
-/// TODO: Check ISBN with current books in database, same with other keys
-/// TODO: FELHANTERING OCH ATT KUNNA SÖKA TILL RÄTT TABELL
+/// TODO: Om behöver ändra isbn i samband med titel
+/// TODO: FELHANTERING
 /// </summary>
 {
 

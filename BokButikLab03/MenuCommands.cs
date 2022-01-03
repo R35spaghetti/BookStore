@@ -3,9 +3,6 @@
 using BokButikLab03.Data;
 using BokButikLab03.Models;
 using Microsoft.EntityFrameworkCore;
-/// <summary>
-/// TODO: Kunna ändra bokISBN?
-/// </summary>
 namespace BokButikLab03
 {
     public static class MenuCommands
@@ -101,9 +98,9 @@ namespace BokButikLab03
         public static void AddNewAuthor()
         {
            string Förnamn = "Ange förnamn";
-            Förnamn = StringInput(Förnamn);
+            Förnamn = UserInputs.StringInput(Förnamn);
           string  EfterNamn = "Ange efternamn";
-            EfterNamn = StringInput(EfterNamn);
+            EfterNamn = UserInputs.StringInput(EfterNamn);
             DateTime Födelsedatum = DateTime.Now;
             Födelsedatum = UserInputs.DateInput(Födelsedatum);
 
@@ -172,7 +169,7 @@ namespace BokButikLab03
             {
                long ISBN = 0;
                 ShowAllISBNs();
-           //TODO    ISBN = UserInputs.(ISBN); SÖKER I BOKTABELLEN
+              ISBN = UserInputs.WhichISBN13ForBookTable(ISBN); 
 
                 var book = context.Böckers
                     .Include(b=>b.Författares)
@@ -199,11 +196,10 @@ namespace BokButikLab03
             {
                 int ID = 0;
                 ShowAllAuthors();
-                ID = IntInput(ID); //TODO kolla med authormetoderna i userinputs
+                ID = UserInputs.EnterAuthorID(ID); 
 
                 var författare = context.Författares
                     .Include(b => b.BöckerIsbns)
-                    
                     .Single(b => b.Id == ID);
 
 
@@ -220,14 +216,13 @@ namespace BokButikLab03
         }
       
 
-        //TODO: Kanske en metod för att hitta författare/isbn?
         public static void EditTheAuthor()
         {
             ShowAllAuthors();
             InputPromptMessage();
             int answer = 0;
             string strAnswer = "";
-            answer = IntInput(answer);
+            answer = UserInputs.EnterAuthorID(answer);
 
             using var context = new Laboration2RBContext();
 
@@ -241,12 +236,12 @@ namespace BokButikLab03
                 {
                     ChangeWhatMessage();
                     PromptIcon();
-                    strAnswer = StringInput(strAnswer);
+                    strAnswer = UserInputs.StringInput(strAnswer);
 
                     if (strAnswer.ToLower() == "förnamn")
                     {
                         EnterFirstNameMessage();
-                        strAnswer = StringInput(strAnswer);
+                        strAnswer = UserInputs.StringInput(strAnswer);
                         foundName.Förnamn = strAnswer;
                         var FoundFirstName = foundName.Förnamn;
                         FirstNameSavedMessage(FoundFirstName);
@@ -255,7 +250,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "efternamn")
                     {
                         EnterLastNameMessage();
-                        strAnswer = StringInput(strAnswer);
+                        strAnswer = UserInputs.StringInput(strAnswer);
                         foundName.Efternamn = strAnswer;
                         var FoundLastname = foundName.Efternamn;
                         LastnameSavedMessage(FoundLastname);
@@ -331,63 +326,61 @@ namespace BokButikLab03
             long answer = 0;
             string strAnswer = "";
             decimal newPrice = 0;
-          //TODO  answer = InputISBN(answer); SÖKER I BÖCKERTABELLEN
+            answer = UserInputs.WhichISBN13ForBookTable(answer); 
 
             using var context = new Laboration2RBContext();
-
+            
             var foundName = context.Böckers
-                            .First(f => f.Isbn13 == answer);
-            //TODO kraschar här då du inte har någon sök till just denna tabel än i USerinputs
+                .First(f => f.Isbn13 == answer);
 
             if (foundName != null)
             {
                 do
                 {
-                    Console.WriteLine("Vad vill du ändra?");
-                    Console.WriteLine("> ");
-                    strAnswer = StringInput(strAnswer);
+                    ChangeWhatMessage();
+                    InputPromptMessage();
+                    strAnswer = UserInputs.StringInput(strAnswer);
 
                     if (strAnswer.ToLower() == "titel")
                     {
-                        Console.WriteLine("Ange ny titel");
-                        strAnswer = StringInput(strAnswer);
-                        foundName.Titel = strAnswer;
-                        Console.WriteLine($"{foundName.Titel} sparad");
+                        ChangeTitleMessage();
+                        strAnswer = UserInputs.StringInput(strAnswer);
+                         var firstName = foundName.Titel = strAnswer;
+                        SavedFirstnameMessage(firstName);
                     }
                     else if (strAnswer.ToLower() == "isbn")
                     {
-                        do
-                        {
-                            Console.WriteLine("Ange nytt isbn13 (minst 13 tecken): ");
-                       //TODO     answer = InputISBN(answer); //BOKTABELLEN
-                        } while (answer == 13); //TODO ÄNDRA HÄR
-                        foundName.Isbn13 = answer;
-                        Console.WriteLine($"{foundName.Isbn13} sparad");
+
+                        GiveNewISBNMessage();
+                        answer = UserInputs.WhichISBN13ForBookTable(answer);
+                      
+                        var ISBN13NEW = foundName.Isbn13 = answer;
+                        SavedISBNMessage(ISBN13NEW);
                     }
 
                     else if (strAnswer.ToLower() == "språk")
                     {
-                        Console.WriteLine("Ange nytt språk");
-                        strAnswer = StringInput(strAnswer);
-                        foundName.Språk = strAnswer;
-                        Console.WriteLine($"{foundName.Språk} sparad");
+                        GiveNewLanguageMessage();
+                        strAnswer = UserInputs.StringInput(strAnswer);
+                        var newLanguage = foundName.Språk = strAnswer;
+                        SavedLanguageMessage(newLanguage);
 
                     }
                     else if (strAnswer.ToLower() == "pris")
                     {
-                        Console.WriteLine("Ange nytt pris");
+                        GiveNewPriceMessage();
                         newPrice = UserInputs.PriceInput(newPrice);
-                        foundName.Pris = answer;
-                        Console.WriteLine($"{foundName.Pris} sparad");
+                       var UpdatedPrice = foundName.Pris = answer;
+                        SavedNewPrice(UpdatedPrice);
 
                     }
                     else if (strAnswer.ToLower() == "utgivningsdatum")
                     {
-                        Console.WriteLine("Ange nytt datum");
+                        GiveNewDateMessage();
                         DateTime AddDate = DateTime.Now;
                         AddDate = UserInputs.DateInput(AddDate);
-                        foundName.Utgivningsdatum = AddDate;
-                        Console.WriteLine($"{foundName.Utgivningsdatum} sparad");
+                     var NewDate =  foundName.Utgivningsdatum = AddDate;
+                        DateUpdated(NewDate);
 
                     }
                     context.SaveChanges();
@@ -395,6 +388,56 @@ namespace BokButikLab03
 
             }
 
+        }
+
+        private static void DateUpdated(DateTime newDate)
+        {
+            Console.WriteLine($"{newDate} sparad");
+        }
+
+        private static void GiveNewDateMessage()
+        {
+            Console.WriteLine("Ange nytt datum");
+        }
+
+        private static void SavedNewPrice(decimal updatedPrice)
+        {
+            Console.WriteLine($"{updatedPrice} sparad");
+        }
+
+        private static void GiveNewPriceMessage()
+        {
+            Console.WriteLine("Ange nytt pris");
+        }
+
+        private static void SavedLanguageMessage(string newLanguage)
+        {
+            Console.WriteLine($"{newLanguage} sparad");
+        }
+
+        private static void GiveNewLanguageMessage()
+        {
+            Console.WriteLine("Ange nytt språk");
+        }
+
+        private static void SavedISBNMessage(long iSBN13NEW)
+        {
+            Console.WriteLine($"{iSBN13NEW} sparad");
+        }
+
+        private static void SavedFirstnameMessage(string firstName)
+        {
+            Console.WriteLine($"{firstName} sparad");
+        }
+
+        private static void GiveNewISBNMessage()
+        {
+            Console.WriteLine("Ange nytt isbn13 (minst 13 tecken: ");
+        }
+
+        private static void ChangeTitleMessage()
+        {
+            Console.WriteLine("Ange ny titel");
         }
 
         private static void EnterISBNMessage()
@@ -442,9 +485,8 @@ namespace BokButikLab03
         /// </summary>
         public static void AddNewBookTitle(int answerID)
 
-        { 
-
-            Console.WriteLine("Vilken bok vill du lägga till?");
+        {
+            EnterBookTitleMessage();
 
         {   long ISBN = 0;
             ISBN = UserInputs.WhichISBN(ISBN);
@@ -459,7 +501,7 @@ namespace BokButikLab03
             AddDate = UserInputs.DateInput(AddDate);
 
                 using var context = new Laboration2RBContext();
-
+                //TODO vad händer om det krockar?
                 var foundAuthor = context.Författares
                     .SingleOrDefault(author => author.Id == answerID);
 
@@ -472,8 +514,8 @@ namespace BokButikLab03
                 var newBookTitle = new Böcker
                 {
                     Isbn13 = ISBN,
-                    Titel = BookTitel = StringInput(BookTitel),
-                    Språk = Språk = StringInput(Språk),
+                    Titel = BookTitel = UserInputs.StringInput(BookTitel),
+                    Språk = Språk = UserInputs.StringInput(Språk),
                     Pris = Pris,
                     Utgivningsdatum = AddDate,
 
@@ -484,7 +526,7 @@ namespace BokButikLab03
 
 
                 context.Add(newBookTitle);
-                Console.WriteLine($"Book {newBookTitle.Titel} added");
+                SavedNewBookMessage(newBookTitle);
                 context.SaveChanges();
 
             }
@@ -493,6 +535,17 @@ namespace BokButikLab03
 
 
         }
+
+        private static void SavedNewBookMessage(Böcker newBookTitle)
+        {
+            Console.WriteLine($"Book {newBookTitle.Titel} added");
+        }
+
+        private static void EnterBookTitleMessage()
+        {
+            Console.WriteLine("Vilken bok vill du lägga till?");
+        }
+
         public static void ShowAuthors()
         {
             using var dbContext = new Laboration2RBContext();
@@ -503,40 +556,7 @@ namespace BokButikLab03
         }
 
 
-  
-
-     //TODO strings o intinput kvar. intinput kan behöva vara authorID check
-        private static string StringInput(string? usrInput)
-        {
-            Console.WriteLine(usrInput);
-            do
-            {
-
-                Console.WriteLine("Enter value:> ");
-                usrInput = Console.ReadLine();
-            }while(usrInput == null);
-          
-
-
-
-            return usrInput;
-        }
-      private static  int IntInput(int answer)
-        {
-            Console.WriteLine($"Current input: {answer}");
-
-
-            Console.WriteLine("Enter ID: ");
-            string? Theanswer = Console.ReadLine();
-            if (Theanswer == null)
-            {
-                throw new Exception("Enter a value");
-            }
-
-            answer = int.Parse(Theanswer);
-         
-            return answer;
-        }
+   
     }
 }
 
