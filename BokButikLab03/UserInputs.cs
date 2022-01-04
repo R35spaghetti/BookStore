@@ -5,7 +5,12 @@ namespace BokButikLab03
 {
     public static class UserInputs
     {
-        //Input for ISBN13 will only be 13 numbers
+        /// <summary>
+        /// Input for ISBN13 needs to be exactly 13 numbers
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string? RegexCheckInput(string? input)
         {
             Regex Check = new(@"^(\d{13})$"); //start and end with exactly 13 digits 
@@ -14,7 +19,7 @@ namespace BokButikLab03
             {
                 if (input == null)
                 {
-                    throw new Exception("input is null");
+                    throw new Exception("input is invalid!");
                 }
                 result = Check.IsMatch(input);
 
@@ -39,7 +44,7 @@ namespace BokButikLab03
             {
                 if (input == null)
                 {
-                    throw new Exception("input is null");
+                    throw new Exception("input is invalid!");
                 }
                 result = Check.IsMatch(input);
 
@@ -54,15 +59,21 @@ namespace BokButikLab03
             } while (!result);
             return input;
         }
+        /// <summary>
+        /// Input for price, to allow decimals
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string? RegexCheckDecimalInput(string? input)
         {
-            Regex Check = new(@"^([\d,\d]*)$"); //sluta och börja på decimal, tillåter att ha , i sig. Nej jag vill inte ha . just nu
+            Regex Check = new(@"^([\d,\d]*)$"); //Allows decimals and ",". No need for a "." at the moment.
             bool result;
             do
             {
                 if (input == null)
                 {
-                    throw new Exception("input is null");
+                    throw new Exception("input is invalid!");
                 }
                 result = Check.IsMatch(input);
 
@@ -76,6 +87,11 @@ namespace BokButikLab03
             } while (!result);
             return input;
         }
+        /// <summary>
+        /// For string inputs
+        /// </summary>
+        /// <param name="usrInput"></param>
+        /// <returns></returns>
         public static string StringInput(string? usrInput)
         {
             do
@@ -84,9 +100,6 @@ namespace BokButikLab03
                 Console.Write("> ");
                 usrInput = Console.ReadLine();
             } while (usrInput == null || usrInput.Trim() == "");
-
-
-
 
             return usrInput;
         }
@@ -111,6 +124,12 @@ namespace BokButikLab03
             return ISBN;
         }
         */
+/// <summary>
+/// For long inputs, used for ISBN
+/// </summary>
+/// <param name="ISBN"></param>
+/// <returns></returns>
+/// <exception cref="Exception"></exception>
         public static long AddAnotherISBN(long ISBN)
         {
             bool flag = true;
@@ -122,6 +141,7 @@ namespace BokButikLab03
                 QuestionISBN13();
                 string? answer = Console.ReadLine();
                 answer = RegexCheckInput(answer);
+
                 if (answer == null)
                 {
                     throw new Exception($"{ISBN} value is invalid");
@@ -134,6 +154,13 @@ namespace BokButikLab03
 
             return ISBN;
         }
+
+        /// <summary>
+        /// Checks if the input for ISBN13 exists
+        /// </summary>
+        /// <param name="ISBN"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static long WhichISBN13ForBookTable(long ISBN)
         {
 
@@ -141,6 +168,7 @@ namespace BokButikLab03
             QuestionISBN13();
             string? answer = Console.ReadLine();
             answer = RegexCheckInput(answer);
+
             if (answer == null)
             {
                 throw new Exception($"{ISBN} doesn't exist");
@@ -154,7 +182,12 @@ namespace BokButikLab03
         }
 
 
-
+        /// <summary>
+        /// Int input for book stock
+        /// </summary>
+        /// <param name="bookAmount"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static int AmountOfBooks(int bookAmount)
         {
             Console.WriteLine("Enter amount of books: ");
@@ -173,7 +206,12 @@ namespace BokButikLab03
         }
 
 
-
+        /// <summary>
+        /// Int input for ID:s
+        /// </summary>
+        /// <param name="answerID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static  int EnterAuthorID(int answerID)
         {
             EnterID();
@@ -181,7 +219,7 @@ namespace BokButikLab03
             answer = RegexCheckNumberInput(answer);
             if (answer == null)
             {
-                throw new Exception($"{answerID} doesn't exist");
+                throw new Exception($"{answerID} doesn't exist!");
             }
             answerID = int.Parse(answer);
 
@@ -190,7 +228,12 @@ namespace BokButikLab03
             return answerID;
         }
 
-
+        /// <summary>
+        /// Input for store ID:s
+        /// </summary>
+        /// <param name="storeID"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static int WhichStore(int storeID)
         {
            
@@ -200,7 +243,7 @@ namespace BokButikLab03
 
             if (answer == null)
             {
-                throw new ArgumentException($"{storeID} doesn't exist");
+                throw new ArgumentException($"{storeID} doesn't exist!");
             }
 
             storeID = int.Parse(answer);
@@ -210,6 +253,12 @@ namespace BokButikLab03
             return storeID;
 
      }
+        /// <summary>
+        /// Input for dates (such as yyyy-mm-dd nothing else :^) ) 
+        /// </summary>
+        /// <param name="addDate"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static DateTime DateInput(DateTime addDate)
         {
             ShowCurrentDateMessage();
@@ -219,18 +268,24 @@ namespace BokButikLab03
             do
             {
                 EnterDateMessage();
-
                 DateLine = Console.ReadLine();
+
                 if (DateLine == null)
                 {
-                    throw new Exception("DateLine is null");
+                    throw new Exception("Date is invalid");
                 }
+
             } while (!DateTime.TryParseExact(DateLine, "yyyy/mm/dd", null, System.Globalization.DateTimeStyles.None, out addDate));
 
             return addDate;
         }
 
-      
+      /// <summary>
+      /// Input for price
+      /// </summary>
+      /// <param name="pris"></param>
+      /// <returns></returns>
+      /// <exception cref="Exception"></exception>
         public static decimal PriceInput(decimal pris)
         {
             CurrentPriceMessage(pris);
@@ -243,7 +298,7 @@ namespace BokButikLab03
                 usrInput = Console.ReadLine();
                 if (usrInput == null)
                 {
-                    throw new Exception("Input is null");
+                    throw new Exception("Input is invalid!");
                 }
                 usrInput = RegexCheckDecimalInput(usrInput.Trim());
             } while (usrInput == null || usrInput == "" || usrInput == "," || usrInput == "0");
@@ -254,6 +309,12 @@ namespace BokButikLab03
             return pris;
         }
 
+        /// <summary>
+        /// To check if the ISBN13 exists
+        /// </summary>
+        /// <param name="iSBN"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
         private static bool FindISBN(long iSBN, bool flag)
         {
             
@@ -284,9 +345,14 @@ namespace BokButikLab03
 
         private static void ISBNAlreadyExistsMessage()
         {
-            Console.WriteLine("ISBN already exist!");
+            Console.WriteLine("This ISBN13 already exist!");
         }
 
+        /// <summary>
+        /// Checks if the ISBN13 in the book table exists
+        /// </summary>
+        /// <param name="iSBN"></param>
+        /// <returns></returns>
         private static long TrycatchCorrectISBN13BookTable(long iSBN)
         {
             try
@@ -297,15 +363,12 @@ namespace BokButikLab03
 
                     .First(f => f.Isbn13 == iSBN);
 
-
                 }
             }
 
-
-
             catch (InvalidOperationException)
             {
-                ISBN13AlreadyExistMessage();
+                ISBNExistMessage();
                 iSBN = WhichISBN13ForBookTable(iSBN);
 
             }
@@ -313,6 +376,16 @@ namespace BokButikLab03
             return iSBN;
         }
 
+        private static void ISBNExistMessage()
+        {
+            Console.WriteLine("That ISBN13 doesn't exist!");
+        }
+
+        /// <summary>
+        /// Checks if the Author ID in the author table exists
+        /// </summary>
+        /// <param name="answerID"></param>
+        /// <returns></returns>
         private static int TrycatchCorrectAuthorID(int answerID)
         {
             try
@@ -323,11 +396,8 @@ namespace BokButikLab03
 
                     .First(f => f.Id == answerID);
 
-
                 }
             }
-
-
 
             catch (InvalidOperationException)
             {
@@ -341,9 +411,14 @@ namespace BokButikLab03
 
         private static void IDDontExistMessage()
         {
-            Console.WriteLine("ID doesn't exist");
+            Console.WriteLine("ID doesn't exist!");
         }
 
+        /// <summary>
+        /// Checks if the store ID exists
+        /// </summary>
+        /// <param name="storeID"></param>
+        /// <returns></returns>
         private static int TrycatchCorrectStoreID(int storeID)
         {
             try
@@ -354,11 +429,8 @@ namespace BokButikLab03
 
                     .First(f => f.ButikId == storeID);
 
-
                 }
             }
-
-
 
             catch (InvalidOperationException)
             {
@@ -372,7 +444,7 @@ namespace BokButikLab03
 
         private static void StoreDontExistMessage()
         {
-            Console.WriteLine("Store doesn't exist");
+            Console.WriteLine("Store doesn't exist!");
 
         }
 /* TODO TA BORT OM ISBN13SÖKERFUNKAR
@@ -402,10 +474,6 @@ namespace BokButikLab03
             return iSBN;
         }
 */
-        private static void ISBN13AlreadyExistMessage()
-        {
-            Console.WriteLine("ISBN13 code doesn't exist!");
-        }
 
         private static void CurrentPriceMessage(decimal pris)
         {
@@ -414,7 +482,7 @@ namespace BokButikLab03
 
         private static void CostOfBookMessage()
         {
-            Console.Write("Enter cost of book: ");
+            Console.Write("Enter the book's price: ");
         }
 
         private static void EnterDateMessage()
@@ -434,12 +502,12 @@ namespace BokButikLab03
 
         private static void EnterID()
         {
-            Console.Write("Enter ID: ");
+            Console.Write("To proceed enter the ID: ");
         }
 
         private static void InputInvalid()
         {
-            Console.WriteLine("Input had invalid characters");
+            Console.WriteLine("Input had invalid characters! ");
         }
         private static void TryAgain()
         {
@@ -447,7 +515,7 @@ namespace BokButikLab03
         }
         private static void QuestionISBN13()
         {
-            Console.Write("Enter ISBN: ");
+            Console.Write("To proceed enter the ISBN: ");
         }
     }
 }

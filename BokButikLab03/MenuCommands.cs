@@ -7,7 +7,9 @@ namespace BokButikLab03
 {
     public static class MenuCommands
     {
-
+        /// <summary>
+        /// Lists the stock of books in each store
+        /// </summary>
         public static void ListAll()
         {
             using var dbContext = new Laboration2RBContext();
@@ -28,13 +30,17 @@ namespace BokButikLab03
 
         private static void ListAllMessage(int butikId, string butiksnamn, string titel, int lagerAntal)
         {
-            Console.WriteLine($" ButiksID: {butikId} - Butiken {butiksnamn} har boken {titel} med antal i lager:  {lagerAntal}");
+            Console.WriteLine($" Store ID: {butikId} - Store {butiksnamn}. Title: {titel} - Stock:  {lagerAntal}");
         }
 
-        //Update current book stock in store 
+        /// <summary>
+        /// //Update current stock in store by adding more books
+        /// </summary>
+        /// <param name="bookTitle"></param>
+        /// <param name="storeID"></param>
+        /// <param name="bookAmount"></param>
         public static void UpdateBookStock(long bookTitle, int storeID, int bookAmount)
         {
-        
 
             using var context = new Laboration2RBContext();
             var UpdateBookAmount = context.LagerSaldos
@@ -69,7 +75,7 @@ namespace BokButikLab03
         //Add new book to the store
         static void AddNewBook(int ButikID, long ISBN, int Antal)
         {
-            Console.Clear();
+
             using Laboration2RBContext db = new();
             LagerSaldo n = new()
             {
@@ -94,7 +100,9 @@ namespace BokButikLab03
 
         }
 
-        /// Add author
+        /// <summary>
+        /// Adds a new author
+        /// </summary>
         public static void AddNewAuthor()
         {
             Console.Clear();
@@ -134,14 +142,17 @@ namespace BokButikLab03
 
         private static void AddNewAuthorMessage(string förnamnet, string efternamnet)
         {
-            Console.WriteLine($" {förnamnet} {efternamnet} added!");
+            Console.WriteLine($" {förnamnet} {efternamnet} was added!");
         }
 
-        //Remove book stock
+        /// <summary>
+        /// Updates the stock by decreasing the stock
+        /// </summary>
+        /// <param name="bookTitle"></param>
+        /// <param name="storeID"></param>
+        /// <param name="BookAmount"></param>
         public static void RemoveBooks(long bookTitle, int storeID, int BookAmount)
         {
-            Console.Clear();
-
 
             using var context = new Laboration2RBContext();
 
@@ -165,19 +176,21 @@ namespace BokButikLab03
 
         private static void NoBooksExistMessage(int storeID)
         {
-            Console.WriteLine($"No books exists at StoreID {storeID}");
+            Console.WriteLine($"No such book exists at StoreID {storeID}");
         }
 
         private static void RemoveBookMessage(int bookAmount, long bookTitle, int storeID)
         {
-            Console.WriteLine($"Removing {bookAmount} amount of books from {bookTitle} removed from StoreID {storeID}");
+            Console.WriteLine($"Removed {bookAmount} books from StoreID {storeID} with the book title: {bookTitle}");
         }
 
-        //Remove a book based on ISBN
+        /// <summary>
+        /// Removes a book title, using its ISBN as input
+        /// </summary>
         public static void RemoveTheBook()
         {
-            Console.Clear();
 
+            Console.Clear();
 
             using (var context = new Laboration2RBContext())
             {
@@ -203,11 +216,12 @@ namespace BokButikLab03
         {
             Console.WriteLine("Book removed");
         }
-
+        /// <summary>
+        /// Removes an author, using its ID as input
+        /// </summary>
         public static void RemoveTheAuthor()
         {
             Console.Clear();
-
 
             using (var context = new Laboration2RBContext())
             {
@@ -232,9 +246,13 @@ namespace BokButikLab03
             Console.WriteLine("Author removed");
         }
       
-
+        /// <summary>
+        /// Allows the user to edit the values of one selected author
+        /// </summary>
         public static void EditTheAuthor()
         {
+            Console.Clear();
+
             ShowAllAuthors();
             InputPromptMessage();
             int answer = 0;
@@ -291,51 +309,53 @@ namespace BokButikLab03
             }
 
         }
-
+     
         private static void DateSavedMessage(DateTime foundDate)
         {
-            Console.WriteLine($"{foundDate} sparad");
+            Console.WriteLine($"{foundDate} saved!");
         }
 
         private static void EnterNewDateMessage()
         {
-            Console.WriteLine("Ange nytt datum");
+            Console.WriteLine("Enter a new date: ");
         }
 
         private static void LastnameSavedMessage(string foundLastname)
         {
-            Console.WriteLine($"{foundLastname} sparad");
+            Console.WriteLine($"{foundLastname} saved!");
         }
 
         private static void EnterLastNameMessage()
         {
-            Console.WriteLine("Ange nytt efternamn");
+            Console.WriteLine("Enter a new surname");
         }
 
         private static void FirstNameSavedMessage(string foundFirstName)
         {
-            Console.WriteLine($"{foundFirstName} sparad");
+            Console.WriteLine($"{foundFirstName} saved!");
         }
 
         private static void EnterFirstNameMessage()
         {
-            Console.WriteLine("Ange nytt förnamn");
+            Console.WriteLine("Enter a new forename");
         }
 
         private static void ChangeWhatMessageForAuthors()
         {
-            Console.Clear();
-            Console.WriteLine("Type end to end edit mode \n" +
-                "To edit the First name type: förnamn \n" +
-                "To edit the Last name type: efternamn \n" +
-                "To edit the Birthday type: födelsedatum \n");
+           
+            Console.WriteLine("Type end to quit the edit mode \n" +
+                "To edit the forename type: förnamn \n" +
+                "To edit the surname type: efternamn \n" +
+                "To edit the date of birth type: födelsedatum \n");
         }
 
         private static void InputPromptMessage()
         {
-            Console.WriteLine("Skriv ID på vem som du vill ändra");
+            Console.WriteLine("To start editing enter the ID");
         }
-
+        /// <summary>
+        /// Allows the user to edit the values of one selected book
+        /// </summary>
         public static void EditTheBook()
         {
             Console.Clear();
@@ -410,8 +430,8 @@ namespace BokButikLab03
 
         private static void ChangeWhatMessageForBooks()
         {
-            Console.Clear();
-            Console.WriteLine("Type end to end edit mode \n" +
+           
+            Console.WriteLine("Type end to quit the edit mode \n" +
                 "To edit the title type: titel \n" +
                 "To edit the ISBN type: isbn \n" +
                 "To edit the language type: språk \n" +
@@ -421,61 +441,65 @@ namespace BokButikLab03
 
         private static void DateUpdated(DateTime newDate)
         {
-            Console.WriteLine($"{newDate} sparad");
+            Console.WriteLine($"{newDate} saved!");
         }
 
         private static void GiveNewDateMessage()
         {
-            Console.WriteLine("Ange nytt datum");
+            Console.WriteLine("Enter a new release date:");
         }
 
         private static void SavedNewPrice(decimal updatedPrice)
         {
-            Console.WriteLine($"{updatedPrice} sparad");
+            Console.WriteLine($"{updatedPrice} saved!");
         }
 
         private static void GiveNewPriceMessage()
         {
-            Console.WriteLine("Ange nytt pris ");
+            Console.WriteLine("Enter a new price: ");
         }
 
         private static void SavedLanguageMessage(string newLanguage)
         {
-            Console.WriteLine($"{newLanguage} sparad");
+            Console.WriteLine($"{newLanguage} saved!");
         }
 
         private static void GiveNewLanguageMessage()
         {
-            Console.WriteLine("Ange nytt språk ");
+            Console.WriteLine("Enter a new language ");
         }
 
         private static void SavedISBNMessage(long iSBN13NEW)
         {
-            Console.WriteLine($"{iSBN13NEW} sparad");
+            Console.WriteLine($"{iSBN13NEW} saved!");
         }
 
         private static void SavedFirstnameMessage(string firstName)
         {
-            Console.WriteLine($"{firstName} sparad");
+            Console.WriteLine($"{firstName} saved!");
         }
 
         private static void GiveNewISBNMessage()
         {
-            Console.WriteLine("Ange nytt isbn13 (minst 13 tecken: ");
+            Console.WriteLine("Enter a new ISBN13 (exactly 13 characters");
         }
 
         private static void ChangeTitleMessage()
         {
-            Console.Write("Enter a new title ");
+            Console.Write("Enter a new title: ");
         }
 
         private static void EnterISBNMessage()
         {
-            Console.WriteLine("Skriv ISBN på vilken bok som du vill ändra ");
+            Console.WriteLine("To start editing enter the ISBN13");
         }
-
-        private static void ShowAllAuthors()
+        /// <summary>
+        /// Shows all the authors
+        /// </summary>
+        public static void ShowAllAuthors()
         {
+            Console.Clear();
+
             using var dbContext = new Laboration2RBContext();
             foreach (var författare in dbContext.Författares.AsNoTracking()
                   .OrderBy(f => f.Id))
@@ -489,11 +513,15 @@ namespace BokButikLab03
 
         private static void ShowAllAuthorsMessage(int författarensID, string förnamnet, string efternamnet)
         {
-            Console.WriteLine($"{författarensID} | {förnamnet} {efternamnet}");
+            Console.WriteLine($"ID: {författarensID} | {förnamnet} {efternamnet}");
         }
-
+        /// <summary>
+        /// Shows all the Books
+        /// </summary>
         public static void ShowAllISBNs()
         {
+            Console.Clear();
+
             using var dbContext = new Laboration2RBContext();
             foreach (var isbn in dbContext.Böckers.AsNoTracking()
                   .OrderBy(bokens => bokens.Titel))
@@ -510,18 +538,18 @@ namespace BokButikLab03
         }
 
         /// <summary>
-        /// Lägga till nya titlar i sortimentet, kunna välja bland befintliga författare
+        /// Add new book titles, applies later to existing authors
         /// </summary>
         public static void AddNewBookTitle(int answerID)
         {
-            Console.Clear();
+          
             EnterBookTitleMessage();
 
         {   long ISBN = 0;
             ISBN = UserInputs.AddAnotherISBN(ISBN);
 
                 string BookTitel = "";
-                Console.Write("Enter title:");
+                EnterNEWBookTitleMessage();
                 BookTitel = UserInputs.StringInput(BookTitel);
 
                 string Språk = "";
@@ -555,7 +583,7 @@ namespace BokButikLab03
 
 
                 };
-                //Adds to junction table
+                //Adds to the junction table
                 newBookTitle.Författares.Add(foundAuthor);
                 // TODO krasch om flera författare läggs till, en bok med flera författare
 
@@ -570,25 +598,20 @@ namespace BokButikLab03
 
         }
 
+        private static void EnterNEWBookTitleMessage()
+        {
+            Console.Write("Enter title:");
+        }
+
         private static void SavedNewBookMessage(Böcker newBookTitle)
         {
-            Console.WriteLine($"Book {newBookTitle.Titel} added");
+            Console.WriteLine($"The book {newBookTitle.Titel} was added!");
         }
 
         private static void EnterBookTitleMessage()
         {
-            Console.WriteLine("Vilken bok vill du lägga till?");
+            Console.WriteLine("Creating a new book title.");
         }
-
-        public static void ShowAuthors()
-        {
-            using var dbContext = new Laboration2RBContext();
-            foreach (var authors in dbContext.Författares.AsNoTracking())
-            {
-                Console.WriteLine($" FörfattareID: {authors.Id} - Namn: {authors.Förnamn} {authors.Efternamn}");
-            }
-        }
-
 
    
     }
