@@ -104,26 +104,6 @@ namespace BokButikLab03
             return usrInput;
         }
 
-/* TODO TA BORT OM WHICHISBN13 FUNKAR ISTÄLLET
-        public static long WhichISBN(long ISBN)
-        {
-
-
-            QuestionISBN13();
-            string? answer = Console.ReadLine();
-            answer = RegexCheckInput(answer);
-            if (answer == null)
-            {
-                throw new Exception($"{ISBN} doesn't exist");
-            }
-
-            ISBN = long.Parse(answer);
-
-            ISBN = TrycatchCorrectISBN13(ISBN);
-
-            return ISBN;
-        }
-        */
 /// <summary>
 /// For long inputs, used for ISBN
 /// </summary>
@@ -180,6 +160,7 @@ namespace BokButikLab03
 
             return ISBN;
         }
+
 
 
         /// <summary>
@@ -376,6 +357,7 @@ namespace BokButikLab03
             return iSBN;
         }
 
+
         private static void ISBNExistMessage()
         {
             Console.WriteLine("That ISBN13 doesn't exist!");
@@ -447,33 +429,6 @@ namespace BokButikLab03
             Console.WriteLine("Store doesn't exist!");
 
         }
-/* TODO TA BORT OM ISBN13SÖKERFUNKAR
-        private static long TrycatchCorrectISBN13(long iSBN)
-        {
-            try
-            {
-                using var context = new Laboration2RBContext();
-                {
-                    var foundID = context.LagerSaldos
-
-                    .First(f => f.Isbn == iSBN);
-
-
-                }
-            }
-
-
-
-            catch (InvalidOperationException)
-            {
-                ISBN13AlreadyExistMessage();
-                iSBN = WhichISBN(iSBN);
-
-            }
-
-            return iSBN;
-        }
-*/
 
         private static void CurrentPriceMessage(decimal pris)
         {

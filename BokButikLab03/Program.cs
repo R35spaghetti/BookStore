@@ -3,9 +3,9 @@ using BokButikLab03;
 
 /// <summary>
 /// TODO: Om man behöver ändra isbn i samband med titel
+/// TODO: En regex för bokstavsinmatning
 /// </summary>
-/// TODO Se över WhichISBN-koden, se att den gör rätt
-/// TODO En regex för bokstavsinmatning
+
 {
 
     int StoreID = 0, BookAmount = 0;
