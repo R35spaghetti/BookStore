@@ -30,7 +30,11 @@ namespace BokButikLab03
 
         private static void ListAllMessage(int butikId, string butiksnamn, string titel, int lagerAntal)
         {
-            Console.WriteLine($" Store ID: {butikId} - Store {butiksnamn}. Title: {titel} - Stock:  {lagerAntal}");
+            Console.WriteLine($"Store ID: {butikId} \n" +
+                $" Store: {butiksnamn} \n" +
+                $" Title: {titel} \n" +
+                $" Stock: {lagerAntal} \n" +
+                $"----------------------------");
         }
 
         /// <summary>
@@ -109,10 +113,10 @@ namespace BokButikLab03
 
            string Förnamn = "";
             EnterFirstNameMessage();
-            Förnamn = UserInputs.StringInput(Förnamn);
+            Förnamn = UserInputs.StringInputLettersOnly(Förnamn);
           string  EfterNamn = "";
             EnterLastNameMessage();
-            EfterNamn = UserInputs.StringInput(EfterNamn);
+            EfterNamn = UserInputs.StringInputLettersOnly(EfterNamn);
             DateTime Födelsedatum = new(1900,01,01);
             Födelsedatum = UserInputs.DateInput(Födelsedatum);
 
@@ -276,7 +280,7 @@ namespace BokButikLab03
                     if (strAnswer.ToLower() == "förnamn")
                     {
                         EnterFirstNameMessage();
-                        strAnswer = UserInputs.StringInput(strAnswer);
+                        strAnswer = UserInputs.StringInputLettersOnly(strAnswer);
                         foundName.Förnamn = strAnswer;
                         var FoundFirstName = foundName.Förnamn;
                         FirstNameSavedMessage(FoundFirstName);
@@ -286,7 +290,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "efternamn")
                     {
                         EnterLastNameMessage();
-                        strAnswer = UserInputs.StringInput(strAnswer);
+                        strAnswer = UserInputs.StringInputLettersOnly(strAnswer);
                         foundName.Efternamn = strAnswer;
                         var FoundLastname = foundName.Efternamn;
                         LastnameSavedMessage(FoundLastname);
@@ -343,7 +347,7 @@ namespace BokButikLab03
         private static void ChangeWhatMessageForAuthors()
         {
            
-            Console.WriteLine("Type end to quit the edit mode \n" +
+            Console.WriteLine("\n Type end to quit the edit mode \n" +
                 "To edit the forename type: förnamn \n" +
                 "To edit the surname type: efternamn \n" +
                 "To edit the date of birth type: födelsedatum \n");
@@ -399,7 +403,7 @@ namespace BokButikLab03
                     else if (strAnswer.ToLower() == "språk")
                     {
                         GiveNewLanguageMessage();
-                        strAnswer = UserInputs.StringInput(strAnswer);
+                        strAnswer = UserInputs.StringInputLettersOnly(strAnswer);
                         var newLanguage = foundName.Språk = strAnswer;
                         SavedLanguageMessage(newLanguage);
 
@@ -431,7 +435,7 @@ namespace BokButikLab03
         private static void ChangeWhatMessageForBooks()
         {
            
-            Console.WriteLine("Type end to quit the edit mode \n" +
+            Console.WriteLine("\n Type end to quit the edit mode \n" +
                 "To edit the title type: titel \n" +
                 "To edit the ISBN type: isbn \n" +
                 "To edit the language type: språk \n" +
@@ -513,7 +517,7 @@ namespace BokButikLab03
 
         private static void ShowAllAuthorsMessage(int författarensID, string förnamnet, string efternamnet)
         {
-            Console.WriteLine($"ID: {författarensID} | {förnamnet} {efternamnet}");
+            Console.WriteLine($"ID: {författarensID} | {förnamnet} {efternamnet} \n");
         }
         /// <summary>
         /// Shows all the Books
@@ -534,7 +538,7 @@ namespace BokButikLab03
 
         private static void ShowAllISBNMessage(string titeln, long isbn13)
         {
-            Console.WriteLine($"{titeln} | {isbn13}");
+            Console.WriteLine($"{titeln} | {isbn13} \n");
         }
 
         /// <summary>

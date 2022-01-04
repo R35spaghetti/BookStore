@@ -3,7 +3,6 @@ using BokButikLab03;
 
 /// <summary>
 /// TODO: Om man behöver ändra isbn i samband med titel
-/// TODO: En regex för bokstavsinmatning
 /// </summary>
 
 {

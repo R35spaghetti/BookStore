@@ -104,12 +104,56 @@ namespace BokButikLab03
             return usrInput;
         }
 
-/// <summary>
-/// For long inputs, used for ISBN
-/// </summary>
-/// <param name="ISBN"></param>
-/// <returns></returns>
-/// <exception cref="Exception"></exception>
+        /// <summary>
+        /// For string inputs, only with letters
+        /// </summary>
+        /// <param name="usrInput"></param>
+        /// <returns></returns>
+        public static string StringInputLettersOnly(string? usrInput)
+        {
+            do
+            {
+
+                Console.Write("> ");
+                usrInput = Console.ReadLine();
+                usrInput = RegexCheckLetterInput(usrInput);
+
+            } while (usrInput == null || usrInput.Trim() == "");
+
+            return usrInput;
+        }
+
+        private static string? RegexCheckLetterInput(string? usrInput)
+        {
+            Regex Check = new(@"^([a-zåäöA-ZÅÄÖ]+)$"); //Only accepts letters
+            bool result;
+            do
+            {
+                if (usrInput == null)
+                {
+                    throw new Exception("input is invalid!");
+                }
+                result = Check.IsMatch(usrInput);
+
+                if (result == false)
+                {
+                    InputInvalid();
+                    TryAgain();
+                    usrInput = Console.ReadLine();
+
+                }
+
+            } while (!result);
+            return usrInput;
+
+        }
+
+        /// <summary>
+        /// For long inputs, used for ISBN
+        /// </summary>
+        /// <param name="ISBN"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static long AddAnotherISBN(long ISBN)
         {
             bool flag = true;
