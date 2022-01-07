@@ -2,7 +2,7 @@
 using BokButikLab03;
 
 /// <summary>
-/// TODO: Om man behöver ändra isbn i samband med titel
+/// TODO: flera författare på en bok
 /// </summary>
 
 {

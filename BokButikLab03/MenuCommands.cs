@@ -546,11 +546,16 @@ namespace BokButikLab03
         /// </summary>
         public static void AddNewBookTitle(int answerID)
         {
-          
+            int testAuthor = 0;
             EnterBookTitleMessage();
 
         {   long ISBN = 0;
             ISBN = UserInputs.AddAnotherISBN(ISBN);
+
+                //TEST METHOD
+                Console.WriteLine("Enter a new author ID");
+                testAuthor = UserInputs.EnterAuthorID(testAuthor);
+                //
 
                 string BookTitel = "";
                 EnterNEWBookTitleMessage();
@@ -571,6 +576,10 @@ namespace BokButikLab03
                 var foundAuthor = context.Författares
                     .SingleOrDefault(author => author.Id == answerID);
 
+
+                var foundAnotherAuthor = context.Författares
+                    .SingleOrDefault(author => author.Id == testAuthor);
+
                 if (foundAuthor == null)
                 {
                     throw new Exception("Author not found");
@@ -589,6 +598,7 @@ namespace BokButikLab03
                 };
                 //Adds to the junction table
                 newBookTitle.Författares.Add(foundAuthor);
+                newBookTitle.Författares.Add(foundAnotherAuthor);
                 // TODO krasch om flera författare läggs till, en bok med flera författare
 
                 context.Add(newBookTitle);
