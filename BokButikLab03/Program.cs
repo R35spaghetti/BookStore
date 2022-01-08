@@ -1,34 +1,21 @@
 ﻿
-using BokButikLab03.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Configuration;
 using BokButikLab03;
 
 
-/// <summary>
-/// TODO: Redigera böcker
-/// TODO: Redigera författare
-/// TODO: Ta bort titlar (tabellen förlag behövs då den använder ISBN från böcker)
-/// </summary>
 
 {
-    Console.WriteLine("Welcome! Press the corresponding buttons:" +
-    " Show all press 1. | Add books press 2.| \n" +
-    " Remove books press 3. | Add new book title press 4. |  Add new author press 5  \n" +
-    "Delete a book, press 6 | Delete an author press 7 | Edit the author press 8 | Edit the book press 9");
 
-    int StoreID =0, BookAmount =0;
-    long ISBN =0;
-
+    int StoreID = 0, BookAmount = 0;
+    long ISBN = 0;
 
     do
     {
-        Question();
-   var question = Console.ReadLine();
-  
+
+        IntroMessage();
+        IdleQuestion();
+
+        var question = Console.ReadLine();
+
 
         switch (question)
         {
@@ -37,23 +24,25 @@ using BokButikLab03;
                 break;
 
             case "2":
-            ISBN =  WhichISBN(ISBN);
-            StoreID = WhichStore(StoreID);
-             BookAmount =  AmountOfBooks(BookAmount);
-                MenuCommands.AddBooks(ISBN, StoreID, BookAmount); 
+                MenuCommands.ShowAllISBNs();
+                ISBN = UserInputs.WhichISBN13ForBookTable(ISBN);
+                StoreID = UserInputs.WhichStore(StoreID);
+                BookAmount = UserInputs.AmountOfBooks(BookAmount);
+                MenuCommands.UpdateBookStock(ISBN, StoreID, BookAmount);
                 break;
 
             case "3":
-                ISBN = WhichISBN(ISBN);
-                StoreID = WhichStore(StoreID);
-                BookAmount = AmountOfBooks(BookAmount);
+                MenuCommands.ShowAllISBNs();
+                ISBN = UserInputs.WhichISBN13ForBookTable(ISBN);
+                StoreID = UserInputs.WhichStore(StoreID);
+                BookAmount = UserInputs.AmountOfBooks(BookAmount);
                 MenuCommands.RemoveBooks(ISBN, StoreID, BookAmount);
                 break;
 
             case "4":
-                MenuCommands.ShowAuthors();
+                MenuCommands.ShowAllAuthors();
                 int answerID = 0;
-                 answerID = UserIntInput(answerID);
+                answerID = UserInputs.EnterAuthorID(answerID);
                 MenuCommands.AddNewBookTitle(answerID);
                 break;
 
@@ -78,7 +67,7 @@ using BokButikLab03;
                 break;
 
             default:
-                Console.WriteLine("Unknown command. ");
+                defaultMessage();
                 break;
 
 
@@ -86,78 +75,27 @@ using BokButikLab03;
 
     } while (true);
 
+    void defaultMessage()
+    {
+        Console.WriteLine("Unknown command. ");
+    }
 
-    void Question()
+    void IntroMessage()
+    {
+        Console.WriteLine(" \n Welcome! Press the corresponding buttons:\n" +
+        " Show all press 1. \n" +
+        " Add books press 2. \n" +
+        " Remove books press 3. \n" +
+        " Add new book title press 4. \n" +
+        " Add new author press 5 \n" +
+        " Delete a book, press 6 \n" +
+        " Delete an author press 7 \n" +
+        " Edit the author press 8 \n" +
+        " Edit the book press 9");
+    }
+
+    void IdleQuestion()
     {
         Console.Write("> ");
     }
-    
-
 }
-
-int UserIntInput(int answerID)
-{
-    Console.WriteLine("Enter ID: ");
-    var answer = Console.ReadLine();
-    answerID = int.Parse(answer);
-    if (answer == null)
-    {
-        throw new Exception("Enter a value");
-    }
-
-    return answerID;
-}
-
-int AmountOfBooks(int bookAmount)
-{
-    Console.WriteLine("Enter amount of books: ");
-    var answer = Console.ReadLine();
-    bookAmount = int.Parse(answer);
-    if (answer == null)
-    {
-        throw new Exception("Enter a value");
-    }
-
-    return bookAmount;
-}
-
-int WhichStore(int storeID)
-{
-    Console.WriteLine("Enter store ID: ");
-    var answer = Console.ReadLine();
-    storeID = int.Parse(answer);
-    if (answer == null)
-    {
-        throw new Exception("Enter a value");
-    }
-
-    return storeID;
-}
-
-long WhichISBN(long ISBN)
-{
-    Console.WriteLine("Enter ISBN: ");
-    var answer = Console.ReadLine();
-    ISBN = long.Parse(answer);
-    if (answer == null)
-    {
-        throw new Exception("Enter a value");
-    }
-    return ISBN;
-}
-/*
-
- Scaffold-DbContext "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Laboration2RB;Integrated Security=True;" Microsoft.EntityFrameWorkCore.SqlServer -Table LagerSaldo, Böcker, Författare, FörfattareBöcker, Butiker -ContextDir Data -OutputDir Models -DataAnnotations
-
-*/
-
-
-//Checks JSON-file
-/*
-var builder = new ConfigurationBuilder()
-.AddJsonFile($"appsettings.json", true, true);
-string connectionString =
-builder.Build().GetConnectionString("DefaultConnection");
-Console.WriteLine($"Connection String is: {connectionString}");
-Console.ReadKey();
-*/
