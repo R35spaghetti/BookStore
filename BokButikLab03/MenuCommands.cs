@@ -358,8 +358,7 @@ namespace BokButikLab03
             Console.WriteLine("To start editing enter the ID");
         }
 
-        ///TODO Ta bort  med att kunna ändra ISBN
-
+    
         /// <summary>
         /// Allows the user to edit the values of one selected book
         /// </summary>
@@ -392,15 +391,6 @@ namespace BokButikLab03
                         strAnswer = UserInputs.StringInput(strAnswer);
                          var firstName = foundName.Titel = strAnswer;
                         SavedFirstnameMessage(firstName);
-                    }
-                    else if (strAnswer.ToLower() == "isbn")
-                    {
-
-                        GiveNewISBNMessage();
-                        answer = UserInputs.WhichISBN13ForBookTable(answer);
-                      
-                        var ISBN13NEW = foundName.Isbn13 = answer;
-                        SavedISBNMessage(ISBN13NEW);
                     }
 
                     else if (strAnswer.ToLower() == "språk")
@@ -439,8 +429,7 @@ namespace BokButikLab03
         {
            
             Console.WriteLine("\n Type end to quit the edit mode \n" +
-                "To edit the title type: titel \n" +
-                "To edit the ISBN type: isbn \n" +
+                "To edit the title type: titel \n" +       
                 "To edit the language type: språk \n" +
                 "To edit the price type: pris \n" +
                 "To edit the release date type: utgivningsdatum");
@@ -476,19 +465,9 @@ namespace BokButikLab03
             Console.WriteLine("Enter a new language ");
         }
 
-        private static void SavedISBNMessage(long iSBN13NEW)
-        {
-            Console.WriteLine($"{iSBN13NEW} saved!");
-        }
-
         private static void SavedFirstnameMessage(string firstName)
         {
             Console.WriteLine($"{firstName} saved!");
-        }
-
-        private static void GiveNewISBNMessage()
-        {
-            Console.WriteLine("Enter a new ISBN13 (exactly 13 characters");
         }
 
         private static void ChangeTitleMessage()
