@@ -243,15 +243,21 @@ namespace BokButikLab03
         /// <exception cref="Exception"></exception>
         public static  int EnterAuthorID(int answerID)
         {
-            EnterID();
-            string? answer = Console.ReadLine();
-            answer = RegexCheckNumberInput(answer);
-            if (answer == null)
+            try
             {
-                throw new Exception($"{answerID} doesn't exist!");
+                EnterID();
+                string? answer = Console.ReadLine();
+                answer = RegexCheckNumberInput(answer);
+                if (answer == null)
+                {
+                    throw new Exception($"{answerID} doesn't exist!");
+                }
+                answerID = int.Parse(answer);
             }
-            answerID = int.Parse(answer);
-            //TODO: system.overflowExeception
+            catch (System.OverflowException)
+            {
+                Console.WriteLine("Incorrect input");
+            }
 
             answerID = TrycatchCorrectAuthorID(answerID);
 
