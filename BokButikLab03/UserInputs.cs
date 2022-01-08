@@ -99,6 +99,10 @@ namespace BokButikLab03
 
                 Console.Write("> ");
                 usrInput = Console.ReadLine();
+                if (usrInput == null || usrInput.Trim() == "")
+                {
+                    Console.WriteLine("Empty input!");
+                }
             } while (usrInput == null || usrInput.Trim() == "");
 
             return usrInput;
@@ -247,6 +251,7 @@ namespace BokButikLab03
                 throw new Exception($"{answerID} doesn't exist!");
             }
             answerID = int.Parse(answer);
+            //TODO: system.overflowExeception
 
             answerID = TrycatchCorrectAuthorID(answerID);
 
@@ -466,6 +471,51 @@ namespace BokButikLab03
             }
 
             return storeID;
+        }
+        /// <summary>
+        /// Adds a 2nd author to the book
+        /// </summary>
+        /// <param name="yesNoAnswer"></param>
+        /// <param name="SecondAuthor"></param>
+        /// <returns></returns>
+        public static int AddOrNotAdd(string yesNoAnswer, int SecondAuthor)
+        {
+
+            bool flag = true;
+            do
+            {
+                if (yesNoAnswer.ToLower() == "yes")
+                {
+                    flag = false;
+                    EnterSecondAuthorMessage();
+                    SecondAuthor = EnterAuthorID(SecondAuthor);
+
+
+                }
+                else if (yesNoAnswer.ToLower() == "no")
+                {
+                    flag = false;
+                }
+                //Empty values had no error message when it was just "else"
+                else
+                {
+                    IncorrectAnswerMessage();
+                    yesNoAnswer = StringInput(yesNoAnswer);
+                }
+            }
+            while (flag);
+
+            return SecondAuthor;
+        }
+
+        private static void IncorrectAnswerMessage()
+        {
+            Console.WriteLine("Incorrect input try again");
+        }
+
+        private static void EnterSecondAuthorMessage()
+        {
+            Console.WriteLine("Enter a new author ID");
         }
 
         private static void StoreDontExistMessage()

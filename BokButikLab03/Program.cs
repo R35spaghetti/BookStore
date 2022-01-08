@@ -1,9 +1,7 @@
 ﻿
 using BokButikLab03;
 
-/// <summary>
-/// TODO: flera författare på en bok
-/// </summary>
+
 
 {
 
