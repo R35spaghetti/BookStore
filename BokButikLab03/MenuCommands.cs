@@ -357,6 +357,9 @@ namespace BokButikLab03
         {
             Console.WriteLine("To start editing enter the ID");
         }
+
+        ///TODO Ta bort  med att kunna ändra ISBN
+
         /// <summary>
         /// Allows the user to edit the values of one selected book
         /// </summary>
@@ -546,20 +549,13 @@ namespace BokButikLab03
         /// </summary>
         public static void AddNewBookTitle(int answerID)
         {
-            int testAuthor = 0;
+            int SecondAuthor = 0;
             string yesNo = "";
             EnterBookTitleMessage();
 
         {   long ISBN = 0;
             ISBN = UserInputs.AddAnotherISBN(ISBN);
-
-                //TODO mer än två författare?
-
-                WantToAddAnotherAuthorMessae();
-                yesNo = UserInputs.StringInput(yesNo);
-              testAuthor =  UserInputs.AddOrNotAdd(yesNo, testAuthor);
                
-                
 
                 string BookTitel = "";
                 EnterNEWBookTitleMessage();
@@ -600,20 +596,27 @@ namespace BokButikLab03
                 };
                 //Adds to the junction table
                 newBookTitle.Författares.Add(foundAuthor);
-                
-                if (testAuthor != 0)
-                {
-                    var foundAnotherAuthor = context.Författares
-                        .SingleOrDefault(author => author.Id == testAuthor);
 
-                    if (foundAnotherAuthor == null)
+                //To be able to enter more than 1 author to the book
+                do {
+                   
+                    WantToAddAnotherAuthorMessae();
+                    yesNo = UserInputs.StringInput(yesNo);
+                    SecondAuthor = UserInputs.AddOrNotAdd(yesNo, SecondAuthor);
+
+                    if (SecondAuthor != 0)
                     {
-                        throw new Exception("Author not found");
+                        var foundAnotherAuthor = context.Författares
+                            .SingleOrDefault(author => author.Id == SecondAuthor);
+
+                        if (foundAnotherAuthor == null)
+                        {
+                            throw new Exception("Author not found");
+                        }
+                        newBookTitle.Författares.Add(foundAnotherAuthor);
+
                     }
-                    newBookTitle.Författares.Add(foundAnotherAuthor);
-
-                }
-
+                }while(yesNo == "yes");
 
                 context.Add(newBookTitle);
                 SavedNewBookMessage(newBookTitle);
